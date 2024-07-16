@@ -1,0 +1,84 @@
+# ========================================================
+# .github/workflows/release.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This workflow sets up the Python environment,
+# installs dependencies, creates a package, and uploads the
+# package to the GitHub releases page when a tag starting with
+# "v" is pushed to the main branch.
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Date: 2024-07-16
+# ========================================================
+
+name: release
+
+# Trigger the workflow only on push of tags starting with "v" to the main branch
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v2
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10" # TODO: Set your python version
+
+      # Install dependencies using Makefile
+      - name: Install dependencies
+        run: make install
+
+      # Run tests using Makefile
+      - name: Run tests
+        env:
+          PYTHONPATH: src
+        run: make test
+
+      # Create a package using Makefile
+      - name: Create package
+        run: make package
+
+      # Extract the tag name to use it as the release name and package version
+      - name: Get Tag Name
+        id: get_tag_name
+        run: |
+          TAG=${GITHUB_REF##*/}
+          TAG_NO_V=${TAG#v}
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+          echo "TAG_NO_V=${TAG_NO_V}" >> $GITHUB_ENV
+
+      # Create a new GitHub release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG }}
+          release_name: Release ${{ env.TAG }}
+          draft: false
+          prerelease: false
+
+      # Upload the package to the GitHub release
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # TODO: Adjust the path to your package
+          asset_name: placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # TODO: Adjust the name of your package
+          asset_content_type: application/octet-stream
+# ========================================================
+# End of .github/workflows/release.yml
+# ========================================================
