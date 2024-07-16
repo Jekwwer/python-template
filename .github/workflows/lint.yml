@@ -1,0 +1,42 @@
+# ========================================================
+# .github/workflows/lint.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This workflow sets up the Python environment,
+# installs dependencies, and performs linting on push and
+# pull request events.
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Date: 2024-07-14
+# ========================================================
+
+name: lint
+
+# Trigger the workflow on push or pull request events
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v2
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10" # TODO: Set your python version
+
+      # Install dependencies using Makefile
+      - name: Install dependencies
+        run: make install
+
+      # Perform linting using Makefile
+      - name: Lint code
+        run: make lint
+# ========================================================
+# End of .github/workflows/lint.yml
+# ========================================================
