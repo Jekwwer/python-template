@@ -1,0 +1,47 @@
+# ========================================================
+# .github/workflows/test.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This workflow sets up the Python environment,
+# installs dependencies, and runs tests on push and pull request events.
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Date: 2024-07-16
+# ========================================================
+
+name: test
+
+# Trigger the workflow on push or pull request events
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v2
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10" # TODO: Set your python version
+
+      # Install dependencies using Makefile
+      - name: Install dependencies
+        run: make install
+
+      # Format code using Makefile
+      - name: Format code
+        run: make format
+
+      # Run tests using Makefile
+      - name: Run tests
+        env:
+          PYTHONPATH: src
+        run: make test
+# ========================================================
+# End of .github/workflows/test.yml
+# ========================================================
