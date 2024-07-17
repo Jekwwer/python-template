@@ -25,6 +25,9 @@ pip install --upgrade pip
 pip install -r requirements.txt
 pip install -e .
 
+# Install pre-commit hooks
+pre-commit install
+
 # ========================================================
 # End of scripts/install.sh
 # ========================================================
