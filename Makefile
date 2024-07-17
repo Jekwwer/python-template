@@ -17,8 +17,8 @@
 install:
 	bash scripts/install.sh
 
-# Format code using autopep8
-format:
+# Format code using autopep8 and isort
+format: install
 	bash scripts/format.sh
 
 # Run tests using pytest
@@ -38,7 +38,7 @@ security-check: install
 	bash scripts/security_check.sh
 
 # Create a package
-package: clean test install
+package: clean install test
 	bash scripts/package.sh
 
 # Clean up the project directory
