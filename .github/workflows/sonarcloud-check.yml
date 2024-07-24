@@ -1,0 +1,43 @@
+# ========================================================
+# .github/workflows/sonarcloud-check.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This GitHub Actions workflow triggers SonarCloud analysis
+# on the codebase whenever there is a push to the main branch or a pull
+# request is opened, synchronized, or reopened.
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Date: 2024-07-24
+# ========================================================
+
+name: sonarcloud-check
+
+on:
+  push:
+    branches:
+      - main # Triggers on pushes to the main branch
+  pull_request:
+    types: [opened, synchronize, reopened] # Triggers on pull request events
+
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository code
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch full history for accurate analysis
+
+      # Run SonarCloud scan
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master # Official SonarCloud GitHub Action
+        env:
+          GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }} # Token for authenticating with GitHub
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Token for authenticating with SonarCloud
+
+# ========================================================
+# End of .github/workflows/sonarcloud-check.yml
+# ========================================================

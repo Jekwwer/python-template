@@ -3,6 +3,7 @@ setuptools
 wheel
 autopep8
 pytest
+pytest-cov
 flake8
 pylint
 mypy
