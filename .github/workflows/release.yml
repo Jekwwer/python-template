@@ -36,12 +36,10 @@ jobs:
 
       # Install dependencies using Makefile
       - name: Install dependencies
-        run: make install
+        run: make install-dev
 
       # Run tests using Makefile
       - name: Run tests
-        env:
-          PYTHONPATH: src
         run: make test
 
       # Create a package using Makefile

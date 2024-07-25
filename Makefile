@@ -13,32 +13,36 @@
 
 .PHONY: all install format test package clean lint type-check security-check
 
-# Set up the virtual environment and install dependencies
+# Set up the virtual environment and install production dependencies
 install:
 	bash scripts/install.sh
 
+# Set up the virtual environment and install development dependencies
+install-dev: install
+	bash scripts/install_dev.sh
+
 # Format code using autopep8 and isort
-format: install
+format: install-dev
 	bash scripts/format.sh
 
-# Run tests using pytest
-test: install format
+# Run tests using tox + pytest and create coverage report
+test: format
 	bash scripts/test.sh
 
 # Perform static analysis with Flake8 and Pylint
-lint: install
+lint: install-dev
 	bash scripts/lint.sh
 
 # Perform static type checking with Mypy
-type-check: install
+type-check: install-dev
 	bash scripts/type_check.sh
 
 # Perform security checks with Bandit
-security-check: install
+security-check: install-dev
 	bash scripts/security_check.sh
 
 # Create a package
-package: clean install test
+package: clean install-dev test
 	bash scripts/package.sh
 
 # Clean up the project directory

@@ -1,0 +1,12 @@
+autopep8
+bandit
+coverage
+flake8
+isort
+mypy
+pre-commit
+pylint
+pytest
+setuptools
+tox
+wheel

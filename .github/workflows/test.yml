@@ -7,7 +7,7 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-16
+# Date: 2024-07-25
 # ========================================================
 
 name: test
@@ -31,7 +31,7 @@ jobs:
 
       # Install dependencies using Makefile
       - name: Install dependencies
-        run: make install
+        run: make install-dev
 
       # Format code using Makefile
       - name: Format code
@@ -39,8 +39,6 @@ jobs:
 
       # Run tests using Makefile
       - name: Run tests
-        env:
-          PYTHONPATH: src
         run: make test
 # ========================================================
 # End of .github/workflows/test.yml

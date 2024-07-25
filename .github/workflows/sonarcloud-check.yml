@@ -39,7 +39,7 @@ jobs:
 
       # Install dependencies using Makefile
       - name: Install dependencies
-        run: make install
+        run: make install-dev
 
       # Format code using Makefile
       - name: Format code

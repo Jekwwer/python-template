@@ -32,7 +32,7 @@ jobs:
 
       # Install dependencies using Makefile
       - name: Install dependencies
-        run: make install
+        run: make install-dev
 
       # Perform security checks using Makefile
       - name: Security check
