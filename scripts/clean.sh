@@ -18,6 +18,9 @@ source "$(dirname "$0")/config.sh"
 # Remove virtual environment
 rm -rf venv
 
+# Remove Tox environment
+rm -rf .tox
+
 # Remove distribution files
 rm -rf dist
 
