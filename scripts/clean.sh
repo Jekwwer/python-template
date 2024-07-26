@@ -7,9 +7,12 @@
 #
 # Usage: This script is intended to be run by the Makefile and Github Actions.
 #
+# Run the script using:
+# make clean
+#
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-16
+# Date: 2024-07-26
 # ========================================================
 
 # Source the configuration script
@@ -29,7 +32,7 @@ rm -rf build
 
 # Remove egg-info directories
 rm -rf *.egg-info
-rm -rf $SRC_DIR/placeholder_package.egg-info
+rm -rf $SRC_DIR/*.egg-info
 
 # Remove MyPy cache
 rm -rf .mypy_cache
@@ -42,6 +45,10 @@ find . -type f -name "*.pyc" -delete
 
 # Remove Python bytecode cache directories
 find . -type d -name "__pycache__" -delete
+
+# Remove reports
+rm -rf reports
+rm -rf .coverage
 
 # ========================================================
 # End of scripts/clean.sh
