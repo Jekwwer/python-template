@@ -46,6 +46,7 @@ export COVERAGE_REPORT="$REPORTS_DIR/coverage_${TIMESTAMP}.xml"
 export FLAKE8_REPORT="$REPORTS_DIR/flake8_${TIMESTAMP}.log"
 export MYPY_REPORT="$REPORTS_DIR/mypy_${TIMESTAMP}.log"
 export PYLINT_REPORT="$REPORTS_DIR/pylint_${TIMESTAMP}.log"
+export XUNIT_REPORT="$REPORTS_DIR/xunit_${TIMESTAMP}.xml"
 
 # Define SonarCloud variables
 PROJECT_KEY="jekwwer-python-template"

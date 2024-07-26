@@ -28,6 +28,9 @@ tox
 # Rename the coverage report file to have a timestamp
 mv $REPORTS_DIR/coverage.xml $COVERAGE_REPORT
 
+# Rename the xunit result file to have a timestamp
+mv $REPORTS_DIR/xunit-result.xml $XUNIT_REPORT
+
 # ========================================================
 # End of scripts/test.sh
 # ========================================================

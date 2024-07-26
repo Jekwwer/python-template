@@ -49,6 +49,7 @@ sonar.python.coverage.reportPaths=$COVERAGE_REPORT
 sonar.python.flake8.reportPaths=$FLAKE8_REPORT
 sonar.python.mypy.reportPaths=$MYPY_REPORT
 sonar.python.pylint.reportPaths=$PYLINT_REPORT
+sonar.python.xunit.reportPath=$XUNIT_REPORT
 sonar.sourceEncoding=$ENCODING
 
 # ========================================================
