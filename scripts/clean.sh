@@ -3,9 +3,11 @@
 # scripts/clean.sh
 # ========================================================
 # Description: This script removes all temporary and build files
-# from the project directory, effectively cleaning the project.
+#              from the project directory, effectively cleaning
+#              the project.
 #
-# Usage: This script is intended to be run by the Makefile and Github Actions.
+# Usage: This script is intended to be run by the Makefile
+#        and Github Actions.
 #
 # Run the script using:
 # make clean

@@ -2,9 +2,8 @@
 # .github/workflows/lint.yml
 # ========================================================
 # Project Name: Python Template Repository
-# Description: This workflow sets up the Python environment,
-# installs dependencies, and performs linting on push and
-# pull request events.
+# Description: This workflow performs linting on push and
+#              pull request events.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev

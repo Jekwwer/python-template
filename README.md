@@ -1,14 +1,15 @@
-<!-- ========================================================                     -->
-<!-- README.md File                                                               -->
-<!-- ========================================================                     -->
-<!-- Project Name: Python Template Repository                                     -->
-<!-- Description: This README provides an overview of the project,                -->
-<!-- instructions for installation, usage, and contribution guidelines.           -->
-<!--                                                                              -->
-<!-- Repository: https://github.com/jekwwer/python-template                       -->
-<!-- Author: Evgenii Shiliaev                                                     -->
-<!-- Date: 2024-07-13                                                             -->
-<!-- ========================================================                     -->
+<!-- ========================================================       -->
+<!-- README.md File                                                 -->
+<!-- ========================================================       -->
+<!-- Project Name: Python Template Repository                       -->
+<!-- Description: This README provides an overview of the project,  -->
+<!--              instructions for installation, usage,             -->
+<!--              and contribution guidelines.                      -->
+<!--                                                                -->
+<!-- Repository: https://github.com/jekwwer/python-template         -->
+<!-- Author: Evgenii Shiliaev                                       -->
+<!-- Date: 2024-07-13                                               -->
+<!-- ========================================================       -->
 
 # Python Template Repository
 

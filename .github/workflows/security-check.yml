@@ -2,9 +2,8 @@
 # .github/workflows/security-check.yml
 # ========================================================
 # Project Name: Python Template Repository
-# Description: This workflow sets up the Python environment,
-# installs dependencies, and performs security checks on push
-# and pull request events.
+# Description: This workflow performs security checks on push
+#              and pull request events.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev

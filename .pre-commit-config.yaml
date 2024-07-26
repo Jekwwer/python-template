@@ -3,7 +3,8 @@
 # ========================================================
 # Project Name: Python Template Repository
 # Description: This configuration file sets up pre-commit hooks
-# for automatically checking and formatting code before commits.
+#              for automatically checking and formatting code
+#              before commits.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev

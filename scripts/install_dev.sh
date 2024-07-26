@@ -3,15 +3,18 @@
 # scripts/install-dev.sh
 # ========================================================
 # Description: This script sets up the virtual environment, upgrades pip,
-# and installs the required packages listed in the dev-requirements.txt file,
-# and sets up pre-commit hooks.
+#              and installs the required packages listed in
+#              the dev-requirements.txt file, and sets up pre-commit hooks.
 #
 # Usage: This script is intended to be run by the Makefile and can also
-# be run manually to set up the development environment.
+#        be run manually to set up the development environment.
+#
+# Run the script using:
+# make install-dev
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-16
+# Date: 2024-07-26
 # ========================================================
 
 # Source the configuration script

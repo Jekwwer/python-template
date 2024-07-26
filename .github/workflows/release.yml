@@ -2,10 +2,9 @@
 # .github/workflows/release.yml
 # ========================================================
 # Project Name: Python Template Repository
-# Description: This workflow sets up the Python environment,
-# installs dependencies, creates a package, and uploads the
-# package to the GitHub releases page when a tag starting with
-# "v" is pushed to the main branch.
+# Description: This workflow creates a package, and uploads
+#              the package to the GitHub releases page
+#              when a tag starting with "v" is pushed.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev

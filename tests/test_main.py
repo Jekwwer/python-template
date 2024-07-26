@@ -14,7 +14,7 @@
 
 @code
 # To run the tests, use the following command:
-# python -m unittest tests/test_main.py
+# make test
 @endcode
 
 @see https://github.com/jekwwer/python-template

@@ -8,7 +8,7 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-16
+# Date: 2024-07-26
 # ========================================================
 
 # Phony targets are targets that are not files

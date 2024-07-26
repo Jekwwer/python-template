@@ -2,8 +2,9 @@
 # .editorconfig File
 # =========================================================
 # Project Name: Python Template Repository
-# Description: The settings below are designed to enforce the coding standards
-# outlined in our project documentation, ensuring consistency across the codebase.
+# Description: The settings below are designed to enforce
+#              the coding standards outlined in project documentation,
+#              ensuring consistency across the codebase.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev

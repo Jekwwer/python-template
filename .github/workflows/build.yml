@@ -3,7 +3,8 @@
 # ========================================================
 # Project Name: Python Template Repository
 # Description: This workflow sets up the Python environment,
-# installs dependencies, runs tests, and builds the package on every push.
+#              installs dependencies, runs tests,
+#              and builds the package on every push.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev

@@ -3,11 +3,14 @@
 # scripts/install.sh
 # ========================================================
 # Description: This script sets up the virtual environment, upgrades pip,
-# and installs the required packages listed in the requirements.txt file for
-# a production environment.
+#              and installs the required packages listed in
+#              the requirements.txt file for a production environment.
 #
 # Usage: This script is intended to be run by the Makefile and can also
-# be run manually to set up the development environment.
+#        be run manually to set up the development environment.
+#
+# Run the script using:
+# make install
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev

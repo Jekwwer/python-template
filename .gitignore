@@ -2,11 +2,12 @@
 # .gitignore File
 # =========================================================
 # Project Name: Python Template Repository
-# Description: This file contains a list of file patterns to ignore in the project.
+# Description: This file contains a list of file patterns
+#              to ignore in the project.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-13
+# Date: 2024-07-26
 #
 # Created using '.gitignore Generator' for Visual Studio Code.
 # Source Templates: visualstudiocode, linux, python, windows

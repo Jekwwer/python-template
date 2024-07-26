@@ -12,10 +12,7 @@
 
 @code
 # To build the package, use the following command:
-# python3 setup.py sdist bdist_wheel
-
-# To install the package locally, use:
-# pip install .
+# make package
 @endcode
 
 @see https://github.com/jekwwer/python-template
