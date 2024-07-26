@@ -1,0 +1,64 @@
+#!/bin/bash
+# ========================================================
+# scripts/generate_sonar_project_properties.sh
+# ========================================================
+# Description: This script generates the sonar-project.properties
+#              file for SonarCloud analysis using predefined variables.
+#              It includes project settings and ensures
+#              the properties file is correctly configured
+#              for SonarCloud to analyze the project's codebase.
+#
+# Usage: This script should be run from the root of the project
+#        directory or ensure that the config.sh script,
+#        which sets necessary environment variables, is correctly sourced.
+#
+# Run the script using:
+# make sonar-project-properties
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Date: 2024-07-26
+# ========================================================
+
+# Source the configuration script
+source "$(dirname "$0")/config.sh"
+
+# Generate sonar-project.properties
+cat <<EOF >sonar-project.properties
+# ========================================================
+# sonar-project.properties
+# ========================================================
+# Project Name: $PROJECT_NAME
+# Description: Configuration file for SonarCloud analysis.
+#
+# Repository: $REPOSITORY_URL
+# Author: $AUTHOR
+# Date: $(date +"%Y-%m-%d")
+# ========================================================
+
+# Required project settings
+sonar.projectKey=$PROJECT_KEY
+sonar.projectName=$PROJECT_NAME
+sonar.organization=$ORGANIZATION
+sonar.projectVersion=$PROJECT_VERSION
+sonar.python.version=$PYTHON_VERSION
+sonar.sources=$SOURCES
+sonar.tests=$TESTS
+sonar.python.bandit.reportPaths=$BANDIT_REPORT
+sonar.python.coverage.reportPaths=$COVERAGE_REPORT
+sonar.python.flake8.reportPaths=$FLAKE8_REPORT
+sonar.python.mypy.reportPaths=$MYPY_REPORT
+sonar.python.pylint.reportPaths=$PYLINT_REPORT
+sonar.sourceEncoding=$ENCODING
+
+# ========================================================
+# End of sonar-project.properties
+# ========================================================
+EOF
+
+# Remove the timestamp file after generating the properties file
+rm -f $REPORTS_DIR/timestamp.txt
+
+# ========================================================
+# End of scripts/generate_sonar_project_properties.sh
+# ========================================================

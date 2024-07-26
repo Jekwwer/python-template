@@ -3,15 +3,22 @@
 # ========================================================
 # Project Name: Python Template Repository
 # Description: This Makefile provides commands to set up the environment,
-# format the code, run tests, create a package, perform static analysis,
-# and clean the project directory.
+# 						 format the code, run tests, create a package,
+# 						 perform static analysis and clean the project directory.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
 # Date: 2024-07-16
 # ========================================================
 
-.PHONY: all install format test package clean lint type-check security-check
+# Phony targets are targets that are not files
+.PHONY: all install install-dev format test lint type-check security-check package clean sonar-project-properties clean-timestamp
+
+# Default target
+all: clean-timestamp install-dev format test lint type-check security-check sonar-project-properties
+
+# Create reports by all tools
+all-reports: clean-timestamp install-dev format test lint type-check security-check
 
 # Set up the virtual environment and install production dependencies
 install:
@@ -45,9 +52,17 @@ security-check: install-dev
 package: clean install-dev test
 	bash scripts/package.sh
 
+# Generate the sonar-project.properties file
+sonar-project-properties:
+	bash scripts/generate_sonar_project_properties.sh
+
 # Clean up the project directory
 clean:
 	bash scripts/clean.sh
+
+# Clean up the timestamp files
+clean-timestamp:
+	bash scripts/clean_timestamp.sh
 
 # ========================================================
 # End of Makefile
