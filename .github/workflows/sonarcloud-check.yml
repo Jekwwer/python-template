@@ -3,8 +3,8 @@
 # ========================================================
 # Project Name: Python Template Repository
 # Description: This GitHub Actions workflow triggers SonarCloud analysis
-# on the codebase whenever there is a push to the main branch or a pull
-# request is opened, synchronized, or reopened.
+#              on the codebase whenever there is a push to the main branch
+#              or a pull request is opened, synchronized, or reopened.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
@@ -44,6 +44,18 @@ jobs:
       # Format code using Makefile
       - name: Format code
         run: make format
+
+      # Perform linting using Makefile
+      - name: Lint code
+        run: make lint
+
+      # Perform type checking using Makefile
+      - name: Type check
+        run: make type-check
+
+      # Perform security checks using Makefile
+      - name: Security check
+        run: make security-check
 
       # Run tests and generate coverage report using Makefile
       - name: Run tests and generate coverage report
