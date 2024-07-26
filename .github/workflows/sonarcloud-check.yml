@@ -49,6 +49,10 @@ jobs:
       - name: Run tests and generate coverage report
         run: make test
 
+      # Generate SonarCloud properties file
+      - name: Generate SonarCloud properties file
+        run: make sonar-project-properties
+
       # Run SonarCloud scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master # Official SonarCloud GitHub Action
