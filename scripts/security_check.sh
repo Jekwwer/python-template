@@ -2,15 +2,20 @@
 # ========================================================
 # scripts/security_check.sh
 # ========================================================
-# Description: This script performs security checks on the code in the source
-# and test directories using Bandit to identify potential security issues.
+# Description: This script performs security checks on the code
+#              in the source and test directories using Bandit
+#              to identify potential security issues.
 #
-# Usage: This script is intended to be run by the Makefile and can also
-# be run manually to ensure the codebase is free from common security vulnerabilities.
+# Usage: This script is intended to be run by the Makefile
+#        and can also be run manually to ensure
+#        the codebase is free from common security vulnerabilities.
+#
+# Run the script using:
+# make security-check
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-16
+# Date: 2024-07-26
 # ========================================================
 
 # Source the configuration script
@@ -20,7 +25,7 @@ source "$(dirname "$0")/config.sh"
 source $VENV_DIR/bin/activate
 
 # Perform security checks using Bandit
-$VENV_DIR/bin/bandit -r $SRC_DIR/ $TEST_DIR/
+$VENV_DIR/bin/bandit -r $SRC_DIR/ $TEST_DIR/ -f json -o $BANDIT_REPORT
 
 # ========================================================
 # End of scripts/security_check.sh
