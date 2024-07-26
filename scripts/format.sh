@@ -3,10 +3,13 @@
 # scripts/format.sh
 # ========================================================
 # Description: This script formats the code in the source and test
-# directories using autopep8 with aggressive settings.
+#              directories using autopep8 with aggressive settings.
 #
 # Usage: This script is intended to be run by the Makefile and can
-# also be run manually to ensure code style consistency.
+#        also be run manually to ensure code style consistency.
+#
+# Run the script using:
+# make format
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
@@ -23,7 +26,7 @@ source $VENV_DIR/bin/activate
 $VENV_DIR/bin/isort $SRC_DIR/ $TEST_DIR/
 
 # Format code in the source and test directories
-$VENV_DIR/bin/autopep8 --in-place --aggressive --aggressive --recursive $SRC_DIR/ $TEST_DIR/
+$VENV_DIR/bin/autopep8 --in-place --aggressive --aggressive --recursive -v $SRC_DIR/ $TEST_DIR/ &>$AUTOPEP8_REPORT
 
 # ========================================================
 # End of scripts/format.sh
