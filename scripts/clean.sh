@@ -14,7 +14,7 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-26
+# Date: 2024-07-29
 # ========================================================
 
 # Source the configuration script
@@ -50,6 +50,7 @@ find . -type d -name "__pycache__" -delete
 
 # Remove reports
 rm -rf reports
+rm -rf .benchmarks
 rm -rf .coverage
 
 # ========================================================

@@ -15,7 +15,7 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-26
+# Date: 2024-07-29
 # ========================================================
 
 # Define shared variables
@@ -42,6 +42,7 @@ fi
 # Define the log file names with timestamp
 export AUTOPEP8_REPORT="$REPORTS_DIR/autopep8_${TIMESTAMP}.log"
 export BANDIT_REPORT="$REPORTS_DIR/bandit_${TIMESTAMP}.json"
+export BENCHMARK_REPORT="$REPORTS_DIR/benchmark_${TIMESTAMP}.json"
 export COVERAGE_REPORT="$REPORTS_DIR/coverage_${TIMESTAMP}.xml"
 export FLAKE8_REPORT="$REPORTS_DIR/flake8_${TIMESTAMP}.log"
 export MYPY_REPORT="$REPORTS_DIR/mypy_${TIMESTAMP}.log"

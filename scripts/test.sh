@@ -13,7 +13,7 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-26
+# Date: 2024-07-29
 # ========================================================
 
 # Source the configuration script
@@ -30,6 +30,12 @@ mv $REPORTS_DIR/coverage.xml $COVERAGE_REPORT
 
 # Rename the xunit result file to have a timestamp
 mv $REPORTS_DIR/xunit-result.xml $XUNIT_REPORT
+
+# Find the latest benchmark report file
+GENEREATED_BENCHMARK_REPORT=$(find . -type f -name "*benchmark*" -print0 | xargs -0 stat --format '%W %n' | sort -n | tail -n 1 | cut -d' ' -f2-)
+
+# Rename the benchmark result file to have a timestamp
+mv $GENEREATED_BENCHMARK_REPORT $BENCHMARK_REPORT
 
 # ========================================================
 # End of scripts/test.sh
