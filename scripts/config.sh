@@ -15,7 +15,7 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-29
+# Date: 2024-07-30
 # ========================================================
 
 # Define shared variables
@@ -24,6 +24,9 @@ VENV_DIR=venv
 SRC_DIR=src
 TEST_DIR=tests
 REPORTS_DIR=reports
+
+# Get the script name
+SCRIPT_NAME=$(basename "$0")
 
 # Create reports directory if it doesn't exist
 mkdir -p $REPORTS_DIR
@@ -48,6 +51,12 @@ export FLAKE8_REPORT="$REPORTS_DIR/flake8_${TIMESTAMP}.log"
 export MYPY_REPORT="$REPORTS_DIR/mypy_${TIMESTAMP}.log"
 export PYLINT_REPORT="$REPORTS_DIR/pylint_${TIMESTAMP}.log"
 export XUNIT_REPORT="$REPORTS_DIR/xunit_${TIMESTAMP}.xml"
+export ERROR_LOG="$REPORTS_DIR/error_log_${TIMESTAMP}.txt"
+
+# ANSI color code for formatting
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
 
 # Define SonarCloud variables
 PROJECT_KEY="jekwwer-python-template"
@@ -60,6 +69,33 @@ PYTHON_VERSION="3.10"
 SOURCES=$SRC_DIR
 TESTS=$TEST_DIR
 ENCODING="UTF-8"
+
+# Function to print messages in red
+echo_red() {
+    echo -e "${RED}$1${NC}"
+}
+
+# Function to print messages in green
+echo_green() {
+    echo -e "${GREEN}$1${NC}"
+}
+
+# Function to log errors
+log_error() {
+    echo_red "$1" >>$ERROR_LOG
+    echo_red "$1"
+}
+
+# Function to check the error log and report status
+exit_check() {
+    if [ -f $ERROR_LOG ]; then
+        echo_red "Errors were detected during the execution of $SCRIPT_NAME. Check $ERROR_LOG for details."
+        exit 1
+    else
+        echo_green "All checks passed successfully during the execution of $SCRIPT_NAME."
+        exit 0
+    fi
+}
 
 # ========================================================
 # End of scripts/config.sh
