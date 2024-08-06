@@ -5,6 +5,8 @@
 # Description: This workflow on every push or pull request event:
 #                 - sets up the Python environment,
 #                 - installs dependencies,
+#                 - runs security analysis,
+#                 - performs type analysis,
 #                 - lints the code,
 #                 - runs tests,
 #                 - builds the package.
@@ -33,10 +35,15 @@ jobs:
     uses: ./.github/workflows/run-security-analysis.yml
     needs: setup-environment
 
+  run-type-analysis:
+    name: Run Type Analysis
+    uses: ./.github/workflows/run-type-analysis.yml
+    needs: run-security-analysis
+
   lint:
     name: Lint Code
     uses: ./.github/workflows/lint.yml
-    needs: run-security-analysis
+    needs: run-type-analysis
 
   run-tests:
     name: Run Tests
