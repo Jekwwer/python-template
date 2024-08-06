@@ -6,12 +6,16 @@
 #              the package to the GitHub releases page
 #              when a tag starting with "v" is pushed.
 #
+# Usage: Push a tag starting with "v" to trigger the release workflow.
+#
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-27
+# Author's GitHub Username: jekwwer
+#
+# Date: 2024-08-06
 # ========================================================
 
-name: release
+name: Release Workflow
 
 # Trigger the workflow only on push of tags starting with "v" to the main branch
 on:
@@ -20,21 +24,19 @@ on:
       - "v*"
 
 jobs:
-  build:
+  setup-environment:
     runs-on: ubuntu-latest
 
     steps:
-      # Check out the repository
-      - uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-      # Set up Python
-      - name: Set up Python
+      - name: Set Up Python Environment
         uses: actions/setup-python@v2
         with:
-          python-version: "3.10" # TODO: Set your python version
+          python-version: "3.10"  # TODO: Set your python version
 
-      # Cache pip dependencies
-      - name: Cache pip dependencies
+      - name: Cache Pip Dependencies
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
@@ -42,16 +44,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+  install-dependencies:
+    runs-on: ubuntu-latest
+    needs: setup-environment
+
+    steps:
       # Install dependencies using Makefile
-      - name: Install dependencies
+      - name: Install Dependencies
         run: make install-dev
 
+  run-tests:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+
+    steps:
       # Run tests using Makefile
-      - name: Run tests
+      - name: Run Tests
         run: make test
 
+  build-package:
+    runs-on: ubuntu-latest
+    needs: run-tests
+
+    steps:
       # Create a package using Makefile
-      - name: Create package
+      - name: Create Package
         run: make package
 
       # Extract the tag name to use it as the release name and package version
@@ -63,8 +80,12 @@ jobs:
           echo "TAG=${TAG}" >> $GITHUB_ENV
           echo "TAG_NO_V=${TAG_NO_V}" >> $GITHUB_ENV
 
-      # Create a new GitHub release
-      - name: Create Release
+  create-release:
+    runs-on: ubuntu-latest
+    needs: build-package
+
+    steps:
+      - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1.1.0
         env:

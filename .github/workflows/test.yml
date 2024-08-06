@@ -5,32 +5,35 @@
 # Description: This workflow runs tests on push
 #              and pull request events.
 #
+# Usage: Push or pull request to trigger the test workflow.
+#
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-27
+# Author's GitHub Username: jekwwer
+#
+# Date: 2024-08-06
 # ========================================================
 
-name: test
+name: Testing Workflow
 
 # Trigger the workflow on push or pull request events
 on: [push, pull_request]
 
 jobs:
-  test:
+  setup-environment:
+    name: Setup Environment
     runs-on: ubuntu-latest
 
     steps:
-      # Check out the repository
-      - uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-      # Set up Python
-      - name: Set up Python
+      - name: Set Up Python Environment
         uses: actions/setup-python@v2
         with:
           python-version: "3.10" # TODO: Set your python version
 
-      # Cache pip dependencies
-      - name: Cache pip dependencies
+      - name: Cache Pip Dependencies
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
@@ -38,16 +41,33 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+  install-dependencies:
+    runs-on: ubuntu-latest
+    needs: setup-environment
+
+    steps:
       # Install dependencies using Makefile
-      - name: Install dependencies
+      - name: Install Dependencies
         run: make install-dev
 
+  format-code:
+    name: Format Code
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+
+    steps:
       # Format code using Makefile
-      - name: Format code
+      - name: Format Code
         run: make format
 
+  run-tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: format-code
+
+    steps:
       # Run tests using Makefile
-      - name: Run tests
+      - name: Run Tests
         run: make test
 # ========================================================
 # End of .github/workflows/test.yml

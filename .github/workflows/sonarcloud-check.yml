@@ -6,39 +6,42 @@
 #              on the codebase whenever there is a push to the main branch
 #              or a pull request is opened, synchronized, or reopened.
 #
+# Usage: Push to the main branch or open a pull request to trigger the SonarCloud analysis.
+#
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-27
+# Author's GitHub Username: jekwwer
+#
+# Date: 2024-08-06
 # ========================================================
 
-name: sonarcloud-check
+name: SonarCloud Analysis Workflow
 
+# Trigger the workflow on push to the main branch or pull request events
 on:
   push:
     branches:
-      - main # Triggers on pushes to the main branch
+      - main
   pull_request:
-    types: [opened, synchronize, reopened] # Triggers on pull request events
+    types: [opened, synchronize, reopened]
 
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  setup-environment:
+    name: Setup Environment
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository code
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Fetch full history for accurate analysis
 
-      # Set up Python
-      - name: Set up Python
+      - name: Set Up Python Environment
         uses: actions/setup-python@v2
         with:
           python-version: "3.10" # TODO: Set your python version
 
-      # Cache pip dependencies
-      - name: Cache pip dependencies
+      - name: Cache Pip Dependencies
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
@@ -46,36 +49,57 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
+  install-dependencies:
+    runs-on: ubuntu-latest
+    needs: setup-environment
+
+    steps:
       # Install dependencies using Makefile
-      - name: Install dependencies
+      - name: Install Dependencies
         run: make install-dev
 
+  code-quality-checks:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+
+    steps:
       # Format code using Makefile
-      - name: Format code
+      - name: Format Code
         run: make format
 
       # Perform linting using Makefile
-      - name: Lint code
+      - name: Lint Code
         run: make lint
 
       # Perform type checking using Makefile
-      - name: Type check
+      - name: Type Check
         run: make type-check
 
       # Perform security checks using Makefile
-      - name: Security check
+      - name: Security Check
         run: make security-check
 
+  run-tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: code-quality-checks
+
+    steps:
       # Run tests and generate coverage report using Makefile
-      - name: Run tests and generate coverage report
+      - name: Run Tests and Generate Coverage Report
         run: make test
 
-      # Generate SonarCloud properties file
-      - name: Generate SonarCloud properties file
+  sonarcloud-analysis:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+    needs: run-tests
+
+    steps:
+      - name: Generate SonarCloud Properties File
         run: make sonar-project-properties
 
-      # Run SonarCloud scan
-      - name: SonarCloud Scan
+      - name: Run SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master # Official SonarCloud GitHub Action
         env:
           GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }} # Token for authenticating with GitHub
