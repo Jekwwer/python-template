@@ -10,12 +10,12 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Author's GitHub Username: jekwwer
+# Author's GitHub Username: @Jekwwer
 #
 # Date: 2024-08-06
 # ========================================================
 
-name: Release Workflow
+name: Releasing
 
 # Trigger the workflow only on push of tags starting with "v" to the main branch
 on:
@@ -24,70 +24,30 @@ on:
       - "v*"
 
 jobs:
-  setup-environment:
+  build:
+    name: Build Project
+    uses: ./.github/workflows/build.yml
+
+  release:
+    name: Release Package
     runs-on: ubuntu-latest
+    needs: build
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Set Up Python Environment
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"  # TODO: Set your python version
-
-      - name: Cache Pip Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-  install-dependencies:
-    runs-on: ubuntu-latest
-    needs: setup-environment
-
-    steps:
-      # Install dependencies using Makefile
-      - name: Install Dependencies
-        run: make install-dev
-
-  run-tests:
-    runs-on: ubuntu-latest
-    needs: install-dependencies
-
-    steps:
-      # Run tests using Makefile
-      - name: Run Tests
-        run: make test
-
-  build-package:
-    runs-on: ubuntu-latest
-    needs: run-tests
-
-    steps:
-      # Create a package using Makefile
-      - name: Create Package
-        run: make package
+        uses: actions/checkout@v4
 
       # Extract the tag name to use it as the release name and package version
       - name: Get Tag Name
-        id: get_tag_name
         run: |
           TAG=${GITHUB_REF##*/}
           TAG_NO_V=${TAG#v}
           echo "TAG=${TAG}" >> $GITHUB_ENV
           echo "TAG_NO_V=${TAG_NO_V}" >> $GITHUB_ENV
 
-  create-release:
-    runs-on: ubuntu-latest
-    needs: build-package
-
-    steps:
       - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1.1.0
+        id: create_github_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
         with:
@@ -102,7 +62,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_github_release.outputs.upload_url }}
           asset_path: ./dist/placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # TODO: Adjust the path to your package
           asset_name: placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # TODO: Adjust the name of your package
           asset_content_type: application/octet-stream

@@ -20,8 +20,8 @@
 
 name: Project Building
 
-# Trigger the workflow on push or pull request events
-on: [push, pull_request]
+# Trigger the workflow on call from another workflow, push, or pull request
+on: [workflow_call, push, pull_request]
 
 jobs:
   setup-environment:
