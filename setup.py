@@ -17,7 +17,8 @@
 
 @see https://github.com/jekwwer/python-template
 
-@date 2024-07-13
+@author Evgenii Shiliaev
+@date 2024-08-06
 ========================================================
 """
 
@@ -30,7 +31,7 @@ with open("README.md", "r") as fh:
 # Package setup
 setup(
     name="placeholder_package",  # TODO: Replace with your package name
-    version="0.1.0",  # TODO: Update the version as needed
+    version="0.2.0",  # TODO: Update the version as needed
     author="Evgenii Shiliaev",
     # TODO: Replace with the author's email
     author_email="evgenii.shiliaev.work@pm.me",
