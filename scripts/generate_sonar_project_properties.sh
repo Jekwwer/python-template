@@ -17,7 +17,9 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-07-26
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-06
 # ========================================================
 
 # Source the configuration script
