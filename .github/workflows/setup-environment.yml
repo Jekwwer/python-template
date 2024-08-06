@@ -1,0 +1,50 @@
+# ========================================================
+# .github/workflows/setup-environment.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This workflow sets up the project environment
+#              and installs dependencies.
+#
+# Usage: This workflow is triggered by other workflows to set up
+#        the project environment and cache dependencies.
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-06
+# ========================================================
+
+name: Setup Project Environment
+
+# Trigger the workflow on call from another workflow
+on: workflow_call
+
+jobs:
+  setup-environment:
+    name: Setup Project Environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10" # TODO: Set your python version
+
+      - name: Cache Pip Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Install dependencies using Makefile
+      - name: Install Dependencies
+        run: make install-dev
+# ========================================================
+# End of .github/workflows/setup-environment.yml
+# ========================================================
