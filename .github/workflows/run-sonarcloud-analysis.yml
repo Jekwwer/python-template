@@ -1,0 +1,54 @@
+# ========================================================
+# .github/workflows/run-sonarcloud-analysis.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This GitHub Actions workflow triggers SonarCloud analysis
+#              on the codebase whenever there is a push to the main branch
+#              or a pull request is opened, synchronized, or reopened.
+#
+# Usage: Push to the main branch or open a pull request
+#        to trigger the SonarCloud analysis.
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-06
+# ========================================================
+
+name: SonarCloud Analysis
+
+# Trigger the workflow on push to the main branch or pull request events
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build Project
+    uses: ./.github/workflows/build.yml
+
+  run-sonarcloud-analysis:
+    name: Run SonarCloud Analysis
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Generate SonarCloud Properties File using Makefile
+        run: make sonar-project-properties
+
+      - name: Run Scan using SonarCloud GitHub Action
+        uses: SonarSource/sonarcloud-github-action@master # Official SonarCloud GitHub Action
+        env:
+          GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }} # Token for authenticating with GitHub
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Token for authenticating with SonarCloud
+
+# ========================================================
+# End of .github/workflows/run-sonarcloud-analysis.yml
+# ========================================================
