@@ -28,10 +28,15 @@ jobs:
     name: Setup Project Environment
     uses: ./.github/workflows/setup-environment.yml
 
+  run-security-analysis:
+    name: Run Security Analysis
+    uses: ./.github/workflows/run-security-analysis.yml
+    needs: setup-environment
+
   lint:
     name: Lint Code
     uses: ./.github/workflows/lint.yml
-    needs: setup-environment
+    needs: run-security-analysis
 
   run-tests:
     name: Run Tests
