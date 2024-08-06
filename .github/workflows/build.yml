@@ -2,9 +2,12 @@
 # .github/workflows/build.yml
 # ========================================================
 # Project Name: Python Template Repository
-# Description: This workflow sets up the Python environment,
-#              installs dependencies, runs tests,
-#              and builds the package on every push.
+# Description: This workflow on every push or pull request event:
+#                 - sets up the Python environment,
+#                 - installs dependencies,
+#                 - lints the code,
+#                 - runs tests,
+#                 - builds the package.
 #
 # Usage: Push or pull request to trigger the build workflow.
 #
@@ -25,10 +28,15 @@ jobs:
     name: Setup Project Environment
     uses: ./.github/workflows/setup-environment.yml
 
+  lint:
+    name: Lint Code
+    uses: ./.github/workflows/lint.yml
+    needs: setup-environment
+
   run-tests:
     name: Run Tests
     uses: ./.github/workflows/run-tests.yml
-    needs: setup-environment
+    needs: lint
 
   build-package:
     name: Build Package
