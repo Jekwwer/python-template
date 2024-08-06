@@ -30,6 +30,12 @@ jobs:
 
       - name: Build Package using Makefile
         run: make package
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-artifact
+          path: dist/*.whl
 # ========================================================
 # End of .github/workflows/build-package.yml
 # ========================================================

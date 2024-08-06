@@ -37,6 +37,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: package-artifact
+          path: ./dist
+
       # Extract the tag name to use it as the release name and package version
       - name: Get Tag Name
         run: |
@@ -44,6 +50,11 @@ jobs:
           TAG_NO_V=${TAG#v}
           echo "TAG=${TAG}" >> $GITHUB_ENV
           echo "TAG_NO_V=${TAG_NO_V}" >> $GITHUB_ENV
+
+      - name: Find Package File
+        run: |
+          PACKAGE_FILE=$(ls dist/*.whl)
+          echo "PACKAGE_FILE=${PACKAGE_FILE}" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         id: create_github_release
@@ -63,7 +74,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_github_release.outputs.upload_url }}
-          asset_path: ./dist/placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # TODO: Adjust the path to your package
+          asset_path: ${{ env.PACKAGE_FILE }}
           asset_name: placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # TODO: Adjust the name of your package
           asset_content_type: application/octet-stream
 # ========================================================
