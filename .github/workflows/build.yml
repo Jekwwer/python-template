@@ -6,7 +6,7 @@
 #              installs dependencies, runs tests,
 #              and builds the package on every push.
 #
-# Usage: Push or pull request to trigger the CI/CD pipeline.
+# Usage: Push or pull request to trigger the build workflow.
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
@@ -15,7 +15,7 @@
 # Date: 2024-08-06
 # ========================================================
 
-name: CI/CD Pipeline
+name: Project Building
 
 # Trigger the workflow on push or pull request events
 on: [push, pull_request]
@@ -31,13 +31,9 @@ jobs:
     needs: setup-environment
 
   build-package:
-    runs-on: ubuntu-latest
+    name: Build Package
+    uses: ./.github/workflows/build-package.yml
     needs: run-tests
-
-    steps:
-      # Create a package using Makefile
-      - name: Build Package
-        run: make package
 # ========================================================
 # End of .github/workflows/build.yml
 # ========================================================

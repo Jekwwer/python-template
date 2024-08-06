@@ -1,0 +1,35 @@
+# ========================================================
+# .github/workflows/build-package.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This workflow builds the package.
+#
+# Usage: This workflow is triggered by other workflows
+#        to create a build package.
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-06
+# ========================================================
+
+name: Package Building
+
+# Trigger the workflow on call from another workflow
+on: workflow_call
+
+jobs:
+  build-package:
+    name: Build Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Package using Makefile
+        run: make package
+# ========================================================
+# End of .github/workflows/build-package.yml
+# ========================================================
