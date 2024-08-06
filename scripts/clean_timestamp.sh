@@ -24,7 +24,7 @@
 source "$(dirname "$0")/config.sh"
 
 # Check if the timestamp file exists and delete it if found
-[ -f "$TIMESTAMP_FILE" ] && rm -f "$TIMESTAMP_FILE"
+[ -f "$RUN_TAG_FILE" ] && rm -f "$RUN_TAG_FILE"
 
 # ========================================================
 # End of scripts/scripts/clean_timestamp.sh

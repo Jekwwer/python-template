@@ -3,9 +3,23 @@
 # scripts/config.sh
 # ========================================================
 # Description: This script defines shared variables used across
-# different scripts in the project. These variables include paths
-# to the virtual environment, source directory, test directory,
-# reports directory and generate a timestamp for logging purposes.
+#              different scripts in the project.
+#
+#              These variables include paths to:
+#               - the virtual environment,
+#               - source directory,
+#               - test directory,
+#               - reports directory,
+#               - logs directory,
+#               - reports' file names with run tag.
+#              Some other variables are also defined for SonarCloud.
+#
+#              It defines functions to print messages in color,
+#              log errors, and check for errors before exiting.
+#
+#              It creates logs and reports directories if they
+#              don't exist and generates a [timestamp + last commid id]
+#              run tag for logging purposes.
 #
 # Usage: This script is intended to be sourced by other scripts
 #        to maintain consistency and avoid repetition.
@@ -26,34 +40,41 @@ VENV_DIR=venv
 SRC_DIR=src
 TEST_DIR=tests
 REPORTS_DIR=reports
+LOGS_DIR=logs
 
 # Get the script name
 SCRIPT_NAME=$(basename "$0")
 
-# Create reports directory if it doesn't exist
+# Create logs and reports directories if it don't exist
 mkdir -p $REPORTS_DIR
+mkdir -p $LOGS_DIR
 
-# Path for timestamp file
-export TIMESTAMP_FILE="$REPORTS_DIR/timestamp.txt"
+# Get the last commit ID
+LAST_COMMIT_ID=$(git rev-parse --short HEAD)
 
-# Check if the timestamp file exists; if not, create it
-if [ ! -f "$TIMESTAMP_FILE" ]; then
-    TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-    echo $TIMESTAMP >$TIMESTAMP_FILE
+# Path for run info file
+export RUN_TAG_FILE="$REPORTS_DIR/run_timestamp_with_commit_id.txt"
+
+# Check if the run info file exists; if not, create it
+if [ ! -f "$RUN_TAG_FILE" ]; then
+    # Generate a timestamp with the last commit ID
+    RUN_TAG="$(date +"%Y%m%d_%H%M%S")_${LAST_COMMIT_ID}"
+    echo $RUN_TAG >$RUN_TAG_FILE
 else
-    TIMESTAMP=$(cat $TIMESTAMP_FILE)
+    # Read the run info from the file
+    RUN_TAG=$(cat $RUN_TAG_FILE)
 fi
 
 # Define the log file names with timestamp
-export AUTOPEP8_REPORT="$REPORTS_DIR/autopep8_${TIMESTAMP}.log"
-export BANDIT_REPORT="$REPORTS_DIR/bandit_${TIMESTAMP}.json"
-export BENCHMARK_REPORT="$REPORTS_DIR/benchmark_${TIMESTAMP}.json"
-export COVERAGE_REPORT="$REPORTS_DIR/coverage_${TIMESTAMP}.xml"
-export FLAKE8_REPORT="$REPORTS_DIR/flake8_${TIMESTAMP}.log"
-export MYPY_REPORT="$REPORTS_DIR/mypy_${TIMESTAMP}.log"
-export PYLINT_REPORT="$REPORTS_DIR/pylint_${TIMESTAMP}.log"
-export XUNIT_REPORT="$REPORTS_DIR/xunit_${TIMESTAMP}.xml"
-export ERROR_LOG="$REPORTS_DIR/error_log_${TIMESTAMP}.txt"
+export AUTOPEP8_REPORT="$REPORTS_DIR/autopep8_${RUN_TAG}.log"
+export BANDIT_REPORT="$REPORTS_DIR/bandit_${RUN_TAG}.json"
+export BENCHMARK_REPORT="$REPORTS_DIR/benchmark_${RUN_TAG}.json"
+export COVERAGE_REPORT="$REPORTS_DIR/coverage_${RUN_TAG}.xml"
+export FLAKE8_REPORT="$REPORTS_DIR/flake8_${RUN_TAG}.log"
+export MYPY_REPORT="$REPORTS_DIR/mypy_${RUN_TAG}.log"
+export PYLINT_REPORT="$REPORTS_DIR/pylint_${RUN_TAG}.log"
+export XUNIT_REPORT="$REPORTS_DIR/xunit_${RUN_TAG}.xml"
+export ERROR_LOG="$REPORTS_DIR/error_log_${RUN_TAG}.txt"
 
 # ANSI color code for formatting
 RED='\033[0;31m'
