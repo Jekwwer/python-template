@@ -11,7 +11,7 @@
 #               - test directory,
 #               - reports directory,
 #               - logs directory,
-#               - reports' file names with run tag.
+#               - reports' file names with log run.
 #              Some other variables are also defined for SonarCloud.
 #
 #              It defines functions to print messages in color,
@@ -19,7 +19,7 @@
 #
 #              It creates logs and reports directories if they
 #              don't exist and generates a [timestamp + last commid id]
-#              run tag for logging purposes.
+#              log tag for logging purposes.
 #
 # Usage: This script is intended to be sourced by other scripts
 #        to maintain consistency and avoid repetition.
@@ -31,7 +31,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-08
 # ========================================================
 
 # Define shared variables
@@ -52,29 +52,31 @@ mkdir -p $LOGS_DIR
 # Get the last commit ID
 LAST_COMMIT_ID=$(git rev-parse --short HEAD)
 
-# Path for run info file
-export RUN_TAG_FILE="$REPORTS_DIR/run_timestamp_with_commit_id.txt"
+# Path for log run file
+export LOG_TAG_FILE="$REPORTS_DIR/log-tag.txt"
 
-# Check if the run info file exists; if not, create it
-if [ ! -f "$RUN_TAG_FILE" ]; then
+# Check if the tag info file exists; if not, create it
+if [ ! -f "$LOG_TAG_FILE" ]; then
     # Generate a timestamp with the last commit ID
-    RUN_TAG="$(date +"%Y%m%d_%H%M%S")_${LAST_COMMIT_ID}"
-    echo $RUN_TAG >$RUN_TAG_FILE
+    LOG_TAG="$(date +"%Y%m%d_%H%M%S")_${LAST_COMMIT_ID}"
+    echo $LOG_TAG >$LOG_TAG_FILE
 else
-    # Read the run info from the file
-    RUN_TAG=$(cat $RUN_TAG_FILE)
+    # Read the log run from the file
+    LOG_TAG=$(cat $LOG_TAG_FILE)
 fi
 
-# Define the log file names with timestamp
-export AUTOPEP8_REPORT="$REPORTS_DIR/autopep8_${RUN_TAG}.log"
-export BANDIT_REPORT="$REPORTS_DIR/bandit_${RUN_TAG}.json"
-export BENCHMARK_REPORT="$REPORTS_DIR/benchmark_${RUN_TAG}.json"
-export COVERAGE_REPORT="$REPORTS_DIR/coverage_${RUN_TAG}.xml"
-export FLAKE8_REPORT="$REPORTS_DIR/flake8_${RUN_TAG}.log"
-export MYPY_REPORT="$REPORTS_DIR/mypy_${RUN_TAG}.log"
-export PYLINT_REPORT="$REPORTS_DIR/pylint_${RUN_TAG}.log"
-export XUNIT_REPORT="$REPORTS_DIR/xunit_${RUN_TAG}.xml"
-export ERROR_LOG="$REPORTS_DIR/error_log_${RUN_TAG}.txt"
+# Define the report files' names with log run
+export AUTOPEP8_REPORT="$REPORTS_DIR/autopep8_${LOG_TAG}.log"
+export BANDIT_REPORT="$REPORTS_DIR/bandit_${LOG_TAG}.json"
+export BENCHMARK_REPORT="$REPORTS_DIR/benchmark_${LOG_TAG}.json"
+export COVERAGE_REPORT="$REPORTS_DIR/coverage_${LOG_TAG}.xml"
+export FLAKE8_REPORT="$REPORTS_DIR/flake8_${LOG_TAG}.log"
+export MYPY_REPORT="$REPORTS_DIR/mypy_${LOG_TAG}.log"
+export PYLINT_REPORT="$REPORTS_DIR/pylint_${LOG_TAG}.log"
+export XUNIT_REPORT="$REPORTS_DIR/xunit_${LOG_TAG}.xml"
+
+# Define the log files' names with log run
+export ERROR_LOG="$REPORTS_DIR/error_log_${LOG_TAG}.txt"
 
 # ANSI color code for formatting
 RED='\033[0;31m'
