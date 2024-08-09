@@ -80,8 +80,10 @@ export ERROR_LOG="$LOGS_DIR/error_log_${LOG_TAG}.txt"
 
 # ANSI color code for formatting
 RED='\033[0;31m'
+REVERSE_RED='\033[7;31m' # Red with reversed bg/fg colorsr
 GREEN='\033[0;32m'
-NC='\033[0m' # No Color
+REVERSE_GREEN='\033[7;32m' # Green with reversed bg/fg colors
+NC='\033[0m'               # No Color
 
 # Define SonarCloud variables
 PROJECT_KEY="jekwwer-python-template"
@@ -100,9 +102,19 @@ echo_red() {
     echo -e "${RED}$1${NC}"
 }
 
+# Function to print messages in reverse red
+echo_reverse_red() {
+    echo -e "${REVERSE_RED}$1${NC}"
+}
+
 # Function to print messages in green
 echo_green() {
     echo -e "${GREEN}$1${NC}"
+}
+
+# Function to print messages in reverse green
+echo_reverse_green() {
+    echo -e "${REVERSE_GREEN}$1${NC}"
 }
 
 # Function to log errors
