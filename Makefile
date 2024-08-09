@@ -16,11 +16,11 @@
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-08-08
+# Date: 2024-08-09
 # ========================================================
 
 # Phony targets are targets that are not files
-.PHONY: all install install-dev format test lint type-check security-check package clean sonar-project-properties update-log-tag
+.PHONY: all install install-dev format test lint type-check security-check package sonar-project-properties update-log-tag clean clean-all
 
 # Default target
 all: update-log-tag install-dev format test lint type-check security-check sonar-project-properties
@@ -68,9 +68,13 @@ sonar-project-properties:
 update-log-tag:
 	bash scripts/update_log_tag.sh
 
-# Clean up the project directory
+# Clean up the project directory ecxept the logs and reports
 clean:
 	bash scripts/clean.sh
+
+# Clean up the project directory
+clean-all:
+	bash scripts/clean_all.sh
 
 # ========================================================
 # End of Makefile
