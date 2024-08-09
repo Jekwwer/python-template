@@ -11,7 +11,7 @@
 #               - test directory,
 #               - reports directory,
 #               - logs directory,
-#               - reports' file names with log run.
+#               - reports' file names with log tag.
 #              Some other variables are also defined for SonarCloud.
 #
 #              It defines functions to print messages in color,
@@ -31,7 +31,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-08
+# Date: 2024-08-09
 # ========================================================
 
 # Define shared variables
@@ -52,8 +52,8 @@ mkdir -p $LOGS_DIR
 # Get the last commit ID
 LAST_COMMIT_ID=$(git rev-parse --short HEAD)
 
-# Path for log run file
-export LOG_TAG_FILE="$REPORTS_DIR/log-tag.txt"
+# Path for log tag file
+export LOG_TAG_FILE="$LOGS_DIR/log-tag.txt"
 
 # Check if the tag info file exists; if not, create it
 if [ ! -f "$LOG_TAG_FILE" ]; then
@@ -61,11 +61,11 @@ if [ ! -f "$LOG_TAG_FILE" ]; then
     LOG_TAG="$(date +"%Y%m%d_%H%M%S")_${LAST_COMMIT_ID}"
     echo $LOG_TAG >$LOG_TAG_FILE
 else
-    # Read the log run from the file
+    # Read the log tag from the file
     LOG_TAG=$(cat $LOG_TAG_FILE)
 fi
 
-# Define the report files' names with log run
+# Define the report files' names with log tag
 export AUTOPEP8_REPORT="$REPORTS_DIR/autopep8_${LOG_TAG}.log"
 export BANDIT_REPORT="$REPORTS_DIR/bandit_${LOG_TAG}.json"
 export BENCHMARK_REPORT="$REPORTS_DIR/benchmark_${LOG_TAG}.json"
@@ -75,8 +75,8 @@ export MYPY_REPORT="$REPORTS_DIR/mypy_${LOG_TAG}.log"
 export PYLINT_REPORT="$REPORTS_DIR/pylint_${LOG_TAG}.log"
 export XUNIT_REPORT="$REPORTS_DIR/xunit_${LOG_TAG}.xml"
 
-# Define the log files' names with log run
-export ERROR_LOG="$REPORTS_DIR/error_log_${LOG_TAG}.txt"
+# Define the log files' names with log tag
+export ERROR_LOG="$LOGS_DIR/error_log_${LOG_TAG}.txt"
 
 # ANSI color code for formatting
 RED='\033[0;31m'

@@ -16,7 +16,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-09
 # ========================================================
 
 # Source the configuration script
@@ -50,7 +50,8 @@ find . -type f -name "*.pyc" -delete
 # Remove Python bytecode cache directories
 find . -type d -name "__pycache__" -delete
 
-# Remove reports
+# Remove logs and reports
+rm -rf logs
 rm -rf reports
 rm -rf .benchmarks
 rm -rf .coverage
