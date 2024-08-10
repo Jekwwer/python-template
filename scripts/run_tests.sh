@@ -1,6 +1,6 @@
 #!/bin/bash
 # ========================================================
-# scripts/test.sh
+# scripts/run_tests.sh
 # ========================================================
 # Description: This script runs the test suite using pytest via Tox
 #              to ensure that all tests in the test directory pass successfully.
@@ -46,5 +46,5 @@ exit_code_sum=$(($exit_code_sum + $?))
 
 exit_check $exit_code_sum
 # ========================================================
-# End of scripts/test.sh
+# End of scripts/run_tests.sh
 # ========================================================

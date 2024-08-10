@@ -10,7 +10,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-10
 # ========================================================
 
 name: Testing
@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Tests using Makefile
-        run: make test
+        run: make run-tests
 # ========================================================
 # End of .github/workflows/run-tests.yml
 # ========================================================

@@ -29,13 +29,13 @@
 MAKEFLAGS += -s
 
 # Phony targets are targets that are not files
-.PHONY: all install install-dev format test lint type-check run-security-analysis build-package sonar-project-properties update-log-tag clean clean-all
+.PHONY: all install install-dev format run-tests lint type-check run-security-analysis build-package sonar-project-properties update-log-tag clean clean-all
 
 # Default target
-all: update-log-tag install-dev format test lint type-check run-security-analysis sonar-project-properties
+all: update-log-tag install-dev format run-tests lint type-check run-security-analysis sonar-project-properties
 
 # Create reports by all tools
-all-reports: update-log-tag install-dev format test lint type-check run-security-analysis
+all-reports: update-log-tag install-dev format run-tests lint type-check run-security-analysis
 
 # Set up the virtual environment and install production dependencies
 install: update-log-tag
@@ -50,8 +50,8 @@ format: update-log-tag install-dev
 	bash scripts/format.sh
 
 # Run tests using tox + pytest and create coverage report
-test: update-log-tag format
-	bash scripts/test.sh
+run-tests: update-log-tag format
+	bash scripts/run_tests.sh
 
 # Perform static analysis with Flake8 and Pylint
 lint: update-log-tag install-dev
@@ -66,7 +66,7 @@ run-security-analysis: update-log-tag install-dev
 	bash scripts/run_security_analysis.sh
 
 # Create a package
-build-package: clean install-dev test
+build-package: clean install-dev run-tests
 	bash scripts/build_package.sh
 
 # Generate the sonar-project.properties file
