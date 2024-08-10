@@ -1,6 +1,6 @@
 #!/bin/bash
 # ========================================================
-# scripts/type_check.sh
+# scripts/run_type_analysis.sh
 # ========================================================
 # Description: This script performs static type checking on the code
 #              in the source and test directories using Mypy
@@ -30,5 +30,5 @@ execute_silently "$VENV_DIR/bin/mypy $SRC_DIR/ $TEST_DIR/ >$MYPY_REPORT;
 
 exit_check $?
 # ========================================================
-# End of scripts/type_check.sh
+# End of scripts/run_type_analysis.sh
 # ========================================================
