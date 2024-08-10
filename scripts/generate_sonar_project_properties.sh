@@ -19,13 +19,14 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-10
 # ========================================================
 
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
 # Generate sonar-project.properties
+execute_silently "
 cat <<EOF >sonar-project.properties
 # ========================================================
 # sonar-project.properties
@@ -35,7 +36,7 @@ cat <<EOF >sonar-project.properties
 #
 # Repository: $REPOSITORY_URL
 # Author: $AUTHOR
-# Date: $(date +"%Y-%m-%d")
+# Date: $(date +\"%Y-%m-%d\")
 # ========================================================
 
 # Required project settings
@@ -57,11 +58,9 @@ sonar.sourceEncoding=$ENCODING
 # ========================================================
 # End of sonar-project.properties
 # ========================================================
-EOF
+EOF" "generate sonar-project.properties"
 
-# Remove the timestamp file after generating the properties file
-rm -f $REPORTS_DIR/timestamp.txt
-
+exit_check $?
 # ========================================================
 # End of scripts/generate_sonar_project_properties.sh
 # ========================================================

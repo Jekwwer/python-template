@@ -13,11 +13,20 @@
 #							  - generate the sonar-project.properties file,
 #							  - update the log tag,
 #							  - clean up the project directory.
+#				  			- clean up the project directory
+#									except the logs and reports.
+#
+# Usage: make <command>
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
-# Date: 2024-08-09
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-10
 # ========================================================
+
+# Disable echoing of commands
+MAKEFLAGS += -s
 
 # Phony targets are targets that are not files
 .PHONY: all install install-dev format test lint type-check security-check package sonar-project-properties update-log-tag clean clean-all

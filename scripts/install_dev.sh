@@ -16,24 +16,31 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-10
 # ========================================================
 
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
-# Use the variables defined in config.sh
+# Create a virtual environment and activate it
 $PYTHON -m venv $VENV_DIR
 source $VENV_DIR/bin/activate
 
+exit_code_sum=0
+
 # Upgrade pip and install required packages
-pip install --upgrade pip
-pip install -r dev-requirements.txt
-pip install -e .
+execute_silently "pip install --upgrade pip" "pip upgrade"
+exit_code_sum=$(($exit_code_sum + $?))
+execute_silently "pip install -r dev-requirements.txt" "pip install dev-requirements"
+exit_code_sum=$(($exit_code_sum + $?))
+execute_silently "pip install -e ." "pip install package"
+exit_code_sum=$(($exit_code_sum + $?))
 
 # Install pre-commit hooks
-pre-commit install
+execute_silently "pre-commit install" "pre-commit install"
+exit_code_sum=$(($exit_code_sum + $?))
 
+exit_check $exit_code_sum
 # ========================================================
 # End of scripts/install-dev.sh
 # ========================================================

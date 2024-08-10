@@ -31,7 +31,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-09
+# Date: 2024-08-10
 # ========================================================
 
 # Define shared variables
@@ -123,14 +123,56 @@ log_error() {
     echo_red "$1"
 }
 
+# Function to execute a command silently and handle success/error reporting
+execute_silently() {
+    local command="$1"
+    local operation="$2"
+    local log="/tmp/${operation// /_}.log"
+
+    # Log the start of the operation
+    {
+        echo "Operation: $operation"
+        echo "Command: ${command%%;*}" # Display only the first command
+        echo "----------------------------------------"
+    } >>"$log"
+    # Execute the command and capture any error output
+    bash -c "$command" >/dev/null 2>>"$log"
+
+    # Check the exit status of the command
+    if [ $? -eq 0 ]; then
+        echo_green "SUCCESS: $operation"
+        return 0
+    else
+        # Log the end of the operation
+        {
+            echo "----------------------------------------"
+            echo "End of operation: $operation"
+            echo ""
+        } >>"$log"
+        cat "$log" >>"$ERROR_LOG"
+        rm -f "$log"
+        echo_red "ERROR: $operation"
+        return 1
+    fi
+}
+
 # Function to check the error log and report status
 exit_check() {
-    if [ -f $ERROR_LOG ]; then
-        echo_red "Errors were detected during the execution of $SCRIPT_NAME. Check $ERROR_LOG for details."
-        exit 1
-    else
-        echo_green "All checks passed successfully during the execution of $SCRIPT_NAME."
+    # Check the exit status of the commands
+    if [ $1 -eq 0 ]; then
+        echo_reverse_green "SUCCESS: $SCRIPT_NAME"
+        echo "----------------------------------------"
+        # Remove the error log if it is empty
+        if [ -f "$ERROR_LOG" ] && [ ! -s "$ERROR_LOG" ]; then
+            rm -f $ERROR_LOG
+        fi
         exit 0
+    else
+        echo_reverse_red "ERROR: $SCRIPT_NAME"
+        echo "----------------------------------------"
+        echo_red "Check $ERROR_LOG for details."
+        echo "----------------------------------------"
+        exit 1
     fi
 }
 

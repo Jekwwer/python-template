@@ -16,22 +16,16 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-08
+# Date: 2024-08-10
 # ========================================================
 
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
-# Check if the timestamp file exists and delete it if found
-[ -f "$LOG_TAG_FILE" ] && rm -f "$LOG_TAG_FILE"
+# Check if the log tag file exists and delete it if found
+execute_silently "[ -f \"$LOG_TAG_FILE\" ] && rm -f \"$LOG_TAG_FILE\"" "check and delete log tag file"
 
-# Check if the .update_log_tag_done file exists
-if [ ! -f .update_log_tag_done ]; then
-    # Delete it if found
-    rm -f $LOG_TAG_FILE
-    touch .update_log_tag_done
-fi
-
+exit_check $?
 # ========================================================
 # End of scripts/update_log_tag.sh
 # ========================================================

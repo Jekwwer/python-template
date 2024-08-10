@@ -17,28 +17,29 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-10
 # ========================================================
 
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
-# Use the variables defined in config.sh
+# Activate the virtual environment
 source $VENV_DIR/bin/activate
 
-# Perform static analysis using Flake8
-$VENV_DIR/bin/flake8 $SRC_DIR/ $TEST_DIR/ --output-file=$FLAKE8_REPORT
-if [ $? -ne 0 ]; then
-    log_error "flake8 failed. Check $FLAKE8_REPORT for details."
-fi
+# Initialize the exit code sum variable
+exit_code_sum=0
 
-# Perform static analysis using Pylint
-$VENV_DIR/bin/pylint $SRC_DIR/ $TEST_DIR/ >$PYLINT_REPORT
-if [ $? -ne 0 ]; then
-    log_error "pylint failed. Check $PYLINT_REPORT for details."
-fi
+# Perform static analysis using Flake8 and generate a report
+execute_silently "$VENV_DIR/bin/flake8 $SRC_DIR/ $TEST_DIR/ --output-file=$FLAKE8_REPORT;
+                 if [ \$? -ne 0 ]; then echo 'Check $FLAKE8_REPORT for details.' >&2; exit 1; fi" "flake8"
+exit_code_sum=$(($exit_code_sum + $?))
 
-exit_check
+# Perform static analysis using Pylint and generate a report
+execute_silently "$VENV_DIR/bin/pylint $SRC_DIR/ $TEST_DIR/ >$PYLINT_REPORT;
+                 if [ \$? -ne 0 ]; then echo 'Check $PYLINT_REPORT for details.' >&2; exit 1; fi" "pylint"
+exit_code_sum=$(($exit_code_sum + $?))
+
+exit_check $exit_code_sum
 # ========================================================
 # End of scripts/lint.sh
 # ========================================================
