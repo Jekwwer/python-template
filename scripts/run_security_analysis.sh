@@ -1,6 +1,6 @@
 #!/bin/bash
 # ========================================================
-# scripts/security_check.sh
+# scripts/run_security_analysis.sh
 # ========================================================
 # Description: This script performs security checks on the code
 #              in the source and test directories using Bandit
@@ -24,11 +24,11 @@ source "$(dirname "$0")/config.sh"
 # Activate the virtual environment
 source $VENV_DIR/bin/activate
 
-# Perform security checks using Bandit
+# Perform security analysis using Bandit
 execute_silently "$VENV_DIR/bin/bandit -r $SRC_DIR/ $TEST_DIR/ -f json -o $BANDIT_REPORT;
                  if [ \$? -ne 0 ]; then echo 'Check $BANDIT_REPORT for details.' >&2; exit 1; fi" "bandit"
 
 exit_check $?
 # ========================================================
-# End of scripts/security_check.sh
+# End of scripts/run_security_analysis.sh
 # ========================================================

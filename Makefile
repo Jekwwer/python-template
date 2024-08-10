@@ -8,7 +8,7 @@
 #							  - format code,
 #							  - run tests,
 #							  - perform static analysis,
-#							  - perform security checks,
+#							  - perform security analysis,
 #							  - create a package,
 #							  - generate the sonar-project.properties file,
 #							  - update the log tag,
@@ -29,13 +29,13 @@
 MAKEFLAGS += -s
 
 # Phony targets are targets that are not files
-.PHONY: all install install-dev format test lint type-check security-check build-package sonar-project-properties update-log-tag clean clean-all
+.PHONY: all install install-dev format test lint type-check run-security-analysis build-package sonar-project-properties update-log-tag clean clean-all
 
 # Default target
-all: update-log-tag install-dev format test lint type-check security-check sonar-project-properties
+all: update-log-tag install-dev format test lint type-check run-security-analysis sonar-project-properties
 
 # Create reports by all tools
-all-reports: update-log-tag install-dev format test lint type-check security-check
+all-reports: update-log-tag install-dev format test lint type-check run-security-analysis
 
 # Set up the virtual environment and install production dependencies
 install: update-log-tag
@@ -61,9 +61,9 @@ lint: update-log-tag install-dev
 type-check: update-log-tag install-dev
 	bash scripts/type_check.sh
 
-# Perform security checks with Bandit
-security-check: update-log-tag install-dev
-	bash scripts/security_check.sh
+# Perform security analysis with Bandit
+run-security-analysis: update-log-tag install-dev
+	bash scripts/run_security_analysis.sh
 
 # Create a package
 build-package: clean install-dev test
