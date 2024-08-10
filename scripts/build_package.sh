@@ -1,6 +1,6 @@
 #!/bin/bash
 # ========================================================
-# scripts/package.sh
+# scripts/build_package.sh
 # ========================================================
 # Description: This script creates a source distribution and a wheel
 #              for the project, packaging the code for distribution.
@@ -29,5 +29,5 @@ execute_silently "$PYTHON setup.py sdist bdist_wheel" "package project"
 
 exit_check $?
 # ========================================================
-# End of scripts/package.sh
+# End of scripts/build_package.sh
 # ========================================================

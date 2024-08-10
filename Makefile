@@ -29,7 +29,7 @@
 MAKEFLAGS += -s
 
 # Phony targets are targets that are not files
-.PHONY: all install install-dev format test lint type-check security-check package sonar-project-properties update-log-tag clean clean-all
+.PHONY: all install install-dev format test lint type-check security-check build-package sonar-project-properties update-log-tag clean clean-all
 
 # Default target
 all: update-log-tag install-dev format test lint type-check security-check sonar-project-properties
@@ -66,8 +66,8 @@ security-check: update-log-tag install-dev
 	bash scripts/security_check.sh
 
 # Create a package
-package: clean install-dev test
-	bash scripts/package.sh
+build-package: clean install-dev test
+	bash scripts/build_package.sh
 
 # Generate the sonar-project.properties file
 sonar-project-properties:
