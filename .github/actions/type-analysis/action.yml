@@ -23,7 +23,7 @@ runs:
   using: "composite"
   steps:
     - name: Run Type Analysis using Makefile
-      run: make run-type-analysis
+      run: make type-analysis
       shell: bash
 # ========================================================
 # End of .github/actions/type-analysis/action.yml

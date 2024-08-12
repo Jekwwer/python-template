@@ -1,6 +1,6 @@
 #!/bin/bash
 # ========================================================
-# scripts/run_tests.sh
+# scripts/tests.sh
 # ========================================================
 # Description: This script runs the test suite using pytest via Tox
 #              to ensure that all tests in the test directory pass successfully.
@@ -14,7 +14,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-10
+# Date: 2024-08-12
 # ========================================================
 
 # Source the configuration script
@@ -46,5 +46,5 @@ exit_code_sum=$(($exit_code_sum + $?))
 
 exit_check $exit_code_sum
 # ========================================================
-# End of scripts/run_tests.sh
+# End of scripts/tests.sh
 # ========================================================

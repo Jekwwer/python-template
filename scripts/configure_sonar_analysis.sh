@@ -1,6 +1,6 @@
 #!/bin/bash
 # ========================================================
-# scripts/generate_sonar_project_properties.sh
+# scripts/configure_sonar_analysis.sh
 # ========================================================
 # Description: This script generates the sonar-project.properties
 #              file for SonarCloud analysis using predefined variables.
@@ -13,13 +13,13 @@
 #        which sets necessary environment variables, is correctly sourced.
 #
 # Run the script using:
-# make sonar-project-properties
+# make configure-sonar-analysis
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-10
+# Date: 2024-08-12
 # ========================================================
 
 # Source the configuration script
@@ -62,5 +62,5 @@ EOF" "generate sonar-project.properties"
 
 exit_check $?
 # ========================================================
-# End of scripts/generate_sonar_project_properties.sh
+# End of scripts/configure_sonar_analysis.sh
 # ========================================================

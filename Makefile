@@ -22,20 +22,20 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-10
+# Date: 2024-08-12
 # ========================================================
 
 # Disable echoing of commands
 MAKEFLAGS += -s
 
 # Phony targets are targets that are not files
-.PHONY: all install install-dev format run-tests lint run-type-analysis run-security-analysis build-package sonar-project-properties update-log-tag clean clean-all
+.PHONY: all install install-dev format tests lint type-analysis security-analysis build-package configure-sonar-analysis update-log-tag clean clean-all
 
 # Default target
-all: update-log-tag install-dev format run-tests lint run-type-analysis run-security-analysis sonar-project-properties
+all: update-log-tag install-dev format tests lint type-analysis security-analysis configure-sonar-analysis
 
 # Create reports by all tools
-all-reports: update-log-tag install-dev format run-tests lint run-type-analysis run-security-analysis
+all-reports: update-log-tag install-dev format tests lint type-analysis security-analysis
 
 # Set up the virtual environment and install production dependencies
 install: update-log-tag
@@ -50,28 +50,28 @@ format: update-log-tag install-dev
 	bash scripts/format.sh
 
 # Run tests using tox + pytest and create coverage report
-run-tests: update-log-tag format
-	bash scripts/run_tests.sh
+tests: update-log-tag format
+	bash scripts/tests.sh
 
 # Perform static analysis with Flake8 and Pylint
 lint: update-log-tag install-dev
 	bash scripts/lint.sh
 
 # Perform static analysis with mypy
-run-type-analysis: update-log-tag install-dev
-	bash scripts/run_type_analysis.sh
+type-analysis: update-log-tag install-dev
+	bash scripts/type_analysis.sh
 
 # Perform security analysis with Bandit
-run-security-analysis: update-log-tag install-dev
-	bash scripts/run_security_analysis.sh
+security-analysis: update-log-tag install-dev
+	bash scripts/security_analysis.sh
 
 # Create a package
-build-package: clean install-dev run-tests
+build-package: clean install-dev tests
 	bash scripts/build_package.sh
 
 # Generate the sonar-project.properties file
-sonar-project-properties:
-	bash scripts/generate_sonar_project_properties.sh
+configure-sonar-analysis:
+	bash scripts/configure_sonar_analysis.sh
 
 # Update the log tag for adding the current date and time to logs
 update-log-tag:

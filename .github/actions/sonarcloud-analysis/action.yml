@@ -31,7 +31,7 @@ runs:
   using: "composite"
   steps:
     - name: Generate SonarCloud Properties File using Makefile
-      run: make sonar-project-properties
+      run: make configure-sonar-analysis
       shell: bash
 
     - name: Run Scan using SonarCloud GitHub Action

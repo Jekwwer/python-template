@@ -23,7 +23,7 @@ runs:
   using: "composite"
   steps:
     - name: Run Security Analysis
-      run: make run-security-analysis
+      run: make security-analysis
       shell: bash
 # ========================================================
 # End of .github/actions/security-analysis/action.yml
