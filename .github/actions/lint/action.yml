@@ -1,0 +1,30 @@
+# ========================================================
+# .github/actions/lint/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action runs linting.
+#
+# Usage: Include this action in workflows to perform linting
+#        with flake8 and pylint:
+#        - name: Lint Code
+#          uses: ./.github/actions/lint
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Lint"
+description: "Run linting using Makefile."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Lint Code using Makefile
+      run: make lint
+      shell: bash
+# ========================================================
+# End of .github/actions/lint/action.yml
+# ========================================================

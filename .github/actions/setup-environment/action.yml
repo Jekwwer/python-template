@@ -1,0 +1,53 @@
+# ========================================================
+# .github/actions/setup-environment/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action:
+#               - sets up the Python environment,
+#               - caches dependencies,
+#               - installs required packages.
+#
+# Usage: Include this action in workflows to set up the project environment:
+#        - name: Setup Environment
+#          uses: ./.github/actions/setup-environment
+#          with:
+#            python-version: "your-python-version" # default: "3.10"
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Setup Environment"
+description: "Set up Python environment, cache dependencies, and install packages."
+
+inputs:
+  python-version:
+    description: "Python version"
+    required: true
+    default: "3.10"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set Up Python Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Cache Pip Dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install Dependencies
+      run: make install-dev
+      shell: bash
+# ========================================================
+# End of .github/actions/setup-environment/action.yml
+# ========================================================

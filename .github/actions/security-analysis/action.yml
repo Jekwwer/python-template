@@ -1,0 +1,30 @@
+# ========================================================
+# .github/actions/security-analysis/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action runs security analysis.
+#
+# Usage: Include this action in workflows to perform
+#        security analysis with bandit:
+#        - name: Run Security Analysis
+#          uses: ./.github/actions/security-analysis
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Security Analysis"
+description: "Run security analysis using Makefile."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run Security Analysis
+      run: make run-security-analysis
+      shell: bash
+# ========================================================
+# End of .github/actions/security-analysis/action.yml
+# ========================================================

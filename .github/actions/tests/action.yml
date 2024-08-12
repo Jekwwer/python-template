@@ -1,0 +1,29 @@
+# ========================================================
+# .github/actions/tests/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action runs tests.
+#
+# Usage: Include this action in workflows to run tests.
+#        - name: Run Tests
+#          uses: ./.github/actions/tests
+#
+# Repository: https:\\github.com\jekwwer\python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Tests"
+description: "Run tests using Makefile."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run Tests
+      run: make run-tests
+      shell: bash
+# ========================================================
+# End of .github/actions/tests/action.yml
+# ========================================================

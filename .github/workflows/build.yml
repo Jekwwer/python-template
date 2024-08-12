@@ -3,13 +3,15 @@
 # ========================================================
 # Project Name: Python Template Repository
 # Description: This workflow on every push or pull request event:
+#                 - checks out the code,
 #                 - sets up the Python environment,
-#                 - installs dependencies,
 #                 - runs security analysis,
-#                 - performs type analysis,
+#                 - runs type analysis,
 #                 - lints the code,
 #                 - runs tests,
-#                 - builds the package.
+#                 - performs SonarCloud analysis,
+#                 - builds the package,
+#                 - uploads logs and reports.
 #
 # Usage: Push or pull request to trigger the build workflow.
 #
@@ -17,7 +19,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-12
 # ========================================================
 
 name: Project Building
@@ -26,34 +28,45 @@ name: Project Building
 on: [workflow_call, push, pull_request]
 
 jobs:
-  setup-environment:
-    name: Setup Project Environment
-    uses: ./.github/workflows/setup-environment.yml
+  build:
+    name: Project Build
+    runs-on: ubuntu-latest
 
-  run-security-analysis:
-    name: Run Security Analysis
-    uses: ./.github/workflows/run-security-analysis.yml
-    needs: setup-environment
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-  run-type-analysis:
-    name: Run Type Analysis
-    uses: ./.github/workflows/run-type-analysis.yml
-    needs: run-security-analysis
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+        with:
+          python-version: "3.10"
 
-  lint:
-    name: Lint Code
-    uses: ./.github/workflows/lint.yml
-    needs: run-type-analysis
+      - name: Security Analysis
+        uses: ./.github/actions/security-analysis
 
-  run-tests:
-    name: Run Tests
-    uses: ./.github/workflows/run-tests.yml
-    needs: lint
+      - name: Type Analysis
+        uses: ./.github/actions/type-analysis
 
-  build-package:
-    name: Build Package
-    uses: ./.github/workflows/build-package.yml
-    needs: run-tests
+      - name: Lint
+        uses: ./.github/actions/lint
+
+      - name: Tests
+        uses: ./.github/actions/tests
+
+      - name: SonarCloud Analysis
+        uses: ./.github/actions/sonarcloud-analysis
+        with:
+          github-token: ${{ secrets.SONAR_GITHUB_TOKEN }}
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Build Package
+        uses: ./.github/actions/build-package
+
+      - name: Upload Logs and Reports
+        uses: ./.github/actions/upload-logs-and-reports
+        with:
+          reports_path: "reports/*"
+          logs_path: "logs/*"
 # ========================================================
 # End of .github/workflows/build.yml
 # ========================================================

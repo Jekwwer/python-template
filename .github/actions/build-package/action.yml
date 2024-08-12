@@ -1,0 +1,36 @@
+# ========================================================
+# .github/actions/build-package/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action builds the package
+#              and uploads the resulting artifact.
+#
+# Usage: Include this action in workflows to build a package.
+#        - name: Build Package
+#          uses: ./.github/actions/build-package
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Build Package"
+description: "Build the package using Makefile and upload the resulting artifact."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build Package using Makefile
+      run: make build-package
+      shell: bash
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: package-artifact
+        path: dist/*.whl
+# ========================================================
+# End of .github/actions/build-package/action.yml
+# ========================================================

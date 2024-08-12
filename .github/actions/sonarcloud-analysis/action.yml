@@ -1,0 +1,44 @@
+# ========================================================
+# .github/actions/sonarcloud-analysis/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action triggers SonarCloud analysis on the codebase.
+#
+# Usage: Include this action in workflows to run SonarCloud analysis:
+#        - name: SonarCloud Analysis
+#          uses: ./.github/actions/sonarcloud-analysis
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "SonarCloud Analysis"
+description: "Trigger SonarCloud analysis on the codebase."
+
+inputs:
+  github-token:
+    description: "GitHub token for authentication"
+    required: true
+
+  sonar-token:
+    description: "SonarCloud token for authentication"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate SonarCloud Properties File using Makefile
+      run: make sonar-project-properties
+      shell: bash
+
+    - name: Run Scan using SonarCloud GitHub Action
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        SONAR_TOKEN: ${{ inputs.sonar-token }}
+# ========================================================
+# End of .github/actions/sonarcloud-analysis/action.yml
+# ========================================================

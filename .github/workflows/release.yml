@@ -2,17 +2,19 @@
 # .github/workflows/release.yml
 # ========================================================
 # Project Name: Python Template Repository
-# Description: This workflow creates a package, and uploads
+# Description: This workflow creates a package and uploads
 #              the package to the GitHub releases page
 #              when a tag starting with "v" is pushed.
 #
-# Usage: Push a tag starting with "v" to trigger the release workflow.
+# Usage: Push a tag starting with "v" to trigger the release workflow:
+#        git tag -a v1.0.0 -m "Version 1.0.0"
+#        git push origin v1.0.0
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-06
+# Date: 2024-08-12
 # ========================================================
 
 name: Releasing
@@ -43,7 +45,6 @@ jobs:
           name: package-artifact
           path: ./dist
 
-      # Extract the tag name to use it as the release name and package version
       - name: Get Tag Name
         run: |
           TAG=${GITHUB_REF##*/}
@@ -67,7 +68,6 @@ jobs:
           draft: false
           prerelease: false
 
-      # Upload the package to the GitHub release
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
@@ -75,7 +75,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_github_release.outputs.upload_url }}
           asset_path: ${{ env.PACKAGE_FILE }}
-          asset_name: placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # TODO: Adjust the name of your package
+          asset_name: placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # Adjust the name of your package
           asset_content_type: application/octet-stream
 # ========================================================
 # End of .github/workflows/release.yml

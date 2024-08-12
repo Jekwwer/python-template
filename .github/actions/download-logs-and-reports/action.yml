@@ -1,0 +1,54 @@
+# ========================================================
+# .github/actions/download-logs-and-reports/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action downloads reports and logs as artifacts.
+#
+# Usage: Include this action in workflows to download reports and logs:
+#        - name: Download Logs and Reports
+#          uses: ./.github/actions/download-logs-and-reports
+#          with:
+#            reports_path: "your-reports-path" # Default: "reports/*"
+#            logs_path: "your-logs-path" # Default: "logs/*"
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Download Logs and Reports"
+description: "An action to download logs and reports as artifacts."
+
+inputs:
+  reports_name:
+    description: "The name of the reports artifact"
+    required: true
+    type: string
+  logs_name:
+    description: "The name of the logs artifact"
+    required: true
+    type: string
+  download_path:
+    description: "The path where the artifacts should be downloaded"
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download Reports
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.reports_name }}
+        path: ${{ inputs.download_path }}/reports
+
+    - name: Download Logs
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.logs_name }}
+        path: ${{ inputs.download_path }}/logs
+# --------------------------------------------------------
+# End of .github/actions/download-logs-and-reports/action.yml
+# --------------------------------------------------------
