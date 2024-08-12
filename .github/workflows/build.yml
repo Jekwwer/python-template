@@ -31,6 +31,9 @@ jobs:
   build:
     name: Project Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Checkout Code
