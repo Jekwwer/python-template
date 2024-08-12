@@ -1,0 +1,71 @@
+# ========================================================
+# .github/actions/retrieve-tag/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: Retrieves the most recent Git tag,
+#              defaults to "dev" with a timestamp if none,
+#              and appends "_dev" with a timestamp
+#              if the tag isn't the latest.
+#
+# Usage: Include this action in workflows to retrieve the last Git tag.
+#       - name: Retrieve Tag
+#         uses: ./.github/actions/retrieve-tag
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Retrieve Tag"
+description: 'Retrieves the most recent Git tag,
+  defaults to "dev" with a timestamp if none,
+  and appends "_dev" with a timestamp
+  if the tag isn''t the latest.'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Retrieve Last Tag or Generate a New One
+      id: retrieve_tag_step
+      run: |
+        # Fetch all tags to ensure they're available
+        git fetch --tags || { echo "Failed to fetch tags"; exit 1; }
+
+        # Determine if the current push is a tag
+        if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_type }}" = "tag" ]; then
+          # Use the pushed tag as the package name
+          TAG_NAME="${{ github.ref_name }}"
+          PACKAGE_NAME="package_${TAG_NAME}"
+        else
+          # Get the latest tag in the repository
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null)
+
+          # Get the last commit short hash and timestamp
+          LAST_COMMIT=$(git rev-parse --short HEAD)
+          TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+
+          if [ -n "$LATEST_TAG" ]; then
+            # If there is a tag in the repo, append _dev and timestamp
+            PACKAGE_NAME="package_${LATEST_TAG}_dev_${LAST_COMMIT}_${TIMESTAMP}"
+          else
+            # If there are no tags, use "dev" with the timestamp
+            PACKAGE_NAME="package_dev_${LAST_COMMIT}_${TIMESTAMP}"
+          fi
+        fi
+
+        echo "Resolved Package Name: $PACKAGE_NAME"
+        echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+
+        # Use environment files to set output
+        echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+      shell: bash
+
+outputs:
+  package_name:
+    description: "The resolved package name"
+    value: ${{ steps.retrieve_tag_step.outputs.package_name }}
+# ========================================================
+# End of .github/actions/retrieve-tag/action.yml
+# ========================================================

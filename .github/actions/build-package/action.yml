@@ -22,6 +22,10 @@ description: "Build the package using Makefile and upload the resulting artifact
 runs:
   using: "composite"
   steps:
+    - name: Retrieve Tag
+      id: retrieve_tag
+      uses: ./.github/actions/retrieve-tag
+
     - name: Build Package using Makefile
       run: make build-package
       shell: bash
@@ -29,7 +33,7 @@ runs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: package-artifact
+        name: ${{ steps.retrieve_tag.outputs.package_name }}
         path: dist/*.whl
 # ========================================================
 # End of .github/actions/build-package/action.yml
