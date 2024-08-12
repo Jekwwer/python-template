@@ -13,11 +13,12 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-13
 # ========================================================
 
 name: "Build Package"
-description: "Build the package using Makefile and upload the resulting artifact."
+description: "Build the poject package and upload the artifact."
+author: "Evgenii Shiliaev (@Jekwwer)"
 
 runs:
   using: "composite"
@@ -30,10 +31,15 @@ runs:
       run: make build-package
       shell: bash
 
+    - name: Check Build Success
+      if: ${{ success() }}
+      run: echo "Build succeeded."
+      shell: bash
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.retrieve_tag.outputs.package_name }}
+        name: "${{ github.ref_name }}-${{ steps.retrieve_tag.outputs.package_name }}-${{ github.run_number }}"
         path: dist/*.whl
 # ========================================================
 # End of .github/actions/build-package/action.yml
