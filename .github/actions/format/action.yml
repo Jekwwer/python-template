@@ -1,0 +1,30 @@
+# ========================================================
+# .github/actions/format/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action formats code.
+#
+# Usage: Include this action in workflows to format code
+#        with isort and autopep8:
+#        - name: Format Code
+#          uses: ./.github/actions/format
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-12
+# ========================================================
+
+name: "Lint"
+description: "Run formatting using Makefile."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Format Code using Makefile
+      run: make format
+      shell: bash
+# ========================================================
+# End of .github/actions/format/action.yml
+# ========================================================
