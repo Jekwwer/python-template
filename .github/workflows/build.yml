@@ -10,6 +10,7 @@
 #                 - lints the code,
 #                 - runs tests,
 #                 - performs SonarCloud analysis,
+#                 - retrieves the tag,
 #                 - builds the package,
 #                 - uploads logs and reports.
 #
@@ -19,7 +20,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-13
 # ========================================================
 
 name: Project Building
@@ -63,14 +64,24 @@ jobs:
           github-token: ${{ secrets.SONAR_GITHUB_TOKEN }}
           sonar-token: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Retrieve Tag
+        id: retrieve_tag
+        uses: ./.github/actions/retrieve-tag
+
       - name: Build Package
         uses: ./.github/actions/build-package
+        with:
+          # Example: main-package-1.0.0-1
+          name: "${{ github.ref_name }}-package-${{ steps.retrieve_tag.outputs.tag }}-${{ github.run_number }}"
 
       - name: Upload Logs and Reports
         uses: ./.github/actions/upload-logs-and-reports
         with:
           reports_path: "reports/*"
           logs_path: "logs/*"
+          # Example: main-reports-1.0.0-1
+          reports_artifact_name: "${{ github.ref_name }}-reports-${{ steps.retrieve_tag.outputs.tag }}-${{ github.run_number }}"
+          logs_artifact_name: "${{ github.ref_name }}-logs-${{ steps.retrieve_tag.outputs.tag }}-${{ github.run_number }}"
 # ========================================================
 # End of .github/workflows/build.yml
 # ========================================================

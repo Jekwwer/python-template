@@ -8,25 +8,29 @@
 # Usage: Include this action in workflows to build a package.
 #        - name: Build Package
 #          uses: ./.github/actions/build-package
+#          with:
+#            name: "your-package-name" # Required
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-13
+# Date: 2024-08-14
 # ========================================================
 
 name: "Build Package"
 description: "Build the poject package and upload the artifact."
 author: "Evgenii Shiliaev (@Jekwwer)"
 
+inputs:
+  name:
+    description: "The name of the package to build."
+    required: true
+    type: string
+
 runs:
   using: "composite"
   steps:
-    - name: Retrieve Tag
-      id: retrieve_tag
-      uses: ./.github/actions/retrieve-tag
-
     - name: Build Package using Makefile
       run: make build-package
       shell: bash
@@ -39,7 +43,7 @@ runs:
     - name: Upload Package as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "${{ github.ref_name }}-package-${{ steps.retrieve_tag.outputs.tag }}-${{ github.run_number }}"
+        name: "${{ inputs.name }}"
         path: dist/*.whl
 # ========================================================
 # End of .github/actions/build-package/action.yml
