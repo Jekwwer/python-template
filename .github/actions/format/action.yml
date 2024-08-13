@@ -13,11 +13,12 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-14
 # ========================================================
 
 name: "Lint"
-description: "Run formatting using Makefile."
+description: "Run formatting using isort and autopep8."
+author: "Evgennii Shiliaev (@Jekwwer)"
 
 runs:
   using: "composite"

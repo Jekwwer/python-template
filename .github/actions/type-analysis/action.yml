@@ -13,11 +13,12 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-14
 # ========================================================
 
 name: "Type Analysis"
-description: "Run type analysis using Makefile."
+description: "Run type analysis using mypy."
+author: "Evgennii Shiliaev (@Jekwwer)"
 
 runs:
   using: "composite"
