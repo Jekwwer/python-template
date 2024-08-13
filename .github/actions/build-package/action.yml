@@ -36,10 +36,10 @@ runs:
       run: echo "Build succeeded."
       shell: bash
 
-    - name: Upload Artifact
+    - name: Upload Package as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: "${{ github.ref_name }}-${{ steps.retrieve_tag.outputs.package_name }}-${{ github.run_number }}"
+        name: "${{ github.ref_name }}-package-${{ steps.retrieve_tag.outputs.tag }}-${{ github.run_number }}"
         path: dist/*.whl
 # ========================================================
 # End of .github/actions/build-package/action.yml
