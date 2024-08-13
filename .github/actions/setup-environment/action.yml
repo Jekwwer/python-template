@@ -24,7 +24,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-13
+# Date: 2024-08-14
 # ========================================================
 
 name: "Setup Environment"
@@ -32,7 +32,6 @@ description: >
   Set up Python environment, cache dependencies,
   and install required packages using Makefile.
 author: "Evgennii Shiliaev (@Jekwwer)"
-
 inputs:
   python-version:
     description: "Specify the Python version to use."

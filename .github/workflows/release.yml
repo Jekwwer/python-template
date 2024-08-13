@@ -2,9 +2,13 @@
 # .github/workflows/release.yml
 # ========================================================
 # Project Name: Python Template Repository
-# Description: This workflow creates a package and uploads
-#              the package to the GitHub releases page
-#              when a tag starting with "v" is pushed.
+# Description: This workflow:
+#              - creates a package,
+#              - looks for the package artifact,
+#              - retrieves the pushed tag name,
+#              - creates a GitHub release,
+#              - uploads the package to the GitHub releases page
+#                when a tag starting with "v" is pushed.
 #
 # Usage: Push a tag starting with "v" to trigger the release workflow:
 #        git tag -a v1.0.0 -m "Version 1.0.0"
@@ -14,7 +18,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-14
 # ========================================================
 
 name: Releasing
@@ -35,17 +39,33 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
+    env:
+      GITHUB_REF_NAME: ${{ github.ref_name }}
+      RUN_NUMBER: ${{ github.run_number }}
+      GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Find Artifact
+        run: |
+          ARTIFACT_NAME=$(gh api -H "Accept: application/vnd.github.v3+json" /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts | jq -r '.artifacts[].name' | grep -m 1 'package')
+          if [ -z "$ARTIFACT_NAME" ]; then
+            echo "Error: No artifact with 'package' found."
+            exit 1
+          fi
+          echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
+        shell: bash
+
       - name: Download Artifact
+        if: success()
         uses: actions/download-artifact@v4
         with:
-          name: package-artifact
+          name: ${{ env.ARTIFACT_NAME }}
           path: ./dist
 
-      - name: Get Tag Name
+      - name: Get Pushed Tag Name
         run: |
           TAG=${GITHUB_REF##*/}
           TAG_NO_V=${TAG#v}
@@ -53,15 +73,20 @@ jobs:
           echo "TAG_NO_V=${TAG_NO_V}" >> $GITHUB_ENV
 
       - name: Find Package File
+        id: find_package_file
         run: |
-          PACKAGE_FILE=$(ls dist/*.whl)
+          PACKAGE_FILE=$(ls dist/*.whl | head -n 1)
+          if [ -z "$PACKAGE_FILE" ]; then
+            echo "Error: No package file found in dist/."
+            exit 1
+          fi
           echo "PACKAGE_FILE=${PACKAGE_FILE}" >> $GITHUB_ENV
+          echo "PACKAGE_BASENAME=$(basename $PACKAGE_FILE)" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         id: create_github_release
+        if: success()
         uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.TAG }}
           release_name: Release ${{ env.TAG }}
@@ -70,12 +95,10 @@ jobs:
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_github_release.outputs.upload_url }}
           asset_path: ${{ env.PACKAGE_FILE }}
-          asset_name: placeholder_package-${{ env.TAG_NO_V }}-py3-none-any.whl # Adjust the name of your package
+          asset_name: ${{ env.PACKAGE_BASENAME }}
           asset_content_type: application/octet-stream
 # ========================================================
 # End of .github/workflows/release.yml
