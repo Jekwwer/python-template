@@ -5,29 +5,54 @@
 # Description: This action:
 #               - sets up the Python environment,
 #               - caches dependencies,
-#               - installs required packages.
+#               - installs required packages using Makefile.
 #
 # Usage: Include this action in workflows to set up the project environment:
 #        - name: Setup Environment
 #          uses: ./.github/actions/setup-environment
 #          with:
-#            python-version: "your-python-version" # default: "3.10"
+#            python-version: "your-python-version"
+#                   default: "3.10"
+#            cache-dependencies: "true"
+#                       default: "true"
+#            requirements-file: "your-requirements-file"
+#                      default: "requirements.txt"
+#            dev-requirements-file: "your-dev-requirements-file"
+#                          default: "dev-requirements.txt"
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-13
 # ========================================================
 
 name: "Setup Environment"
-description: "Set up Python environment, cache dependencies, and install packages."
+description: >
+  Set up Python environment, cache dependencies,
+  and install required packages using Makefile.
+author: "Evgennii Shiliaev (@Jekwwer)"
 
 inputs:
   python-version:
-    description: "Python version"
-    required: true
+    description: "Specify the Python version to use."
+    required: false
     default: "3.10"
+
+  cache-dependencies:
+    description: "Whether to cache pip dependencies. Default is true."
+    required: false
+    default: "true"
+
+  requirements-file:
+    description: "The path to the requirements file used for caching."
+    required: false
+    default: "requirements.txt"
+
+  dev-requirements-file:
+    description: "The path to the development requirements file used for caching."
+    required: false
+    default: "dev-requirements.txt"
 
 runs:
   using: "composite"
@@ -38,14 +63,15 @@ runs:
         python-version: ${{ inputs.python-version }}
 
     - name: Cache Pip Dependencies
+      if: ${{ inputs.cache-dependencies == 'true' }}
       uses: actions/cache@v4
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'dev-requirements.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles(inputs.requirements-file, inputs.dev-requirements-file) }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
-    - name: Install Dependencies
+    - name: Install Dependencies with Makefile
       run: make install-dev
       shell: bash
 # ========================================================
