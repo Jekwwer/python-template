@@ -8,8 +8,8 @@
 #        - name: Download Logs and Reports
 #          uses: ./.github/actions/download-logs-and-reports
 #          with:
-#            reports_name: "your-reports-artifact-name" # Default: "reports"
-#            logs_name: "your-logs-artifact-name" # Default: "logs"
+#            reports_name: "your-reports-artifact-name"
+#            logs_name: "your-logs-artifact-name"
 #            download_path: "your-download-path" # Default: "artifacts/"
 #
 # Repository: https://github.com/jekwwer/python-template
@@ -28,13 +28,11 @@ inputs:
     description: "The name of the reports artifact to be downloaded."
     required: true
     type: string
-    default: "reports"
 
   logs_name:
     description: "The name of the logs artifact to be downloaded."
     required: true
     type: string
-    default: "logs"
 
   download_path:
     description: "The root path where the artifacts should be downloaded. Default is 'artifacts/'."

@@ -35,11 +35,6 @@ runs:
       run: make build-package
       shell: bash
 
-    - name: Check Build Success
-      if: ${{ success() }}
-      run: echo "Build succeeded."
-      shell: bash
-
     - name: Upload Package as Artifact
       uses: actions/upload-artifact@v4
       with:

@@ -70,14 +70,14 @@ runs:
       shell: bash
 
     - name: Upload Reports
-      if: success() || always()
+      if: success() || always() # Upload reports even if the job fails
       uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.reports_artifact_name }}
         path: ${{ inputs.reports_path }}
 
     - name: Upload Logs
-      if: success() || always()
+      if: success() || always() # Upload logs even if the job fails
       uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.logs_artifact_name }}
