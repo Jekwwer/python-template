@@ -31,7 +31,7 @@ with open("README.md", "r") as fh:
 # Package setup
 setup(
     name="placeholder_package",  # TODO: Replace with your package name
-    version="0.2.0",  # TODO: Update the version as needed
+    version="0.3.0",  # TODO: Update the version as needed
     author="Evgenii Shiliaev",
     # TODO: Replace with the author's email
     author_email="evgenii.shiliaev.work@pm.me",
