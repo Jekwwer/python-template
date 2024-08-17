@@ -15,7 +15,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-14
+# Date: 2024-08-17
 # ========================================================
 
 name: "Retrieve Tag"
@@ -29,7 +29,7 @@ runs:
   steps:
     - name: Fetch All Tags
       run: |
-        git fetch --tags || { echo "Failed to fetch tags"; exit 1; }
+        git fetch --tags --force
       shell: bash
 
     - name: Retrieve or Generate Tag
