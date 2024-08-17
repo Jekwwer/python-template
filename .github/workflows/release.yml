@@ -18,7 +18,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-14
+# Date: 2024-08-17
 # ========================================================
 
 name: Releasing
@@ -33,6 +33,7 @@ jobs:
   build:
     name: Build Project
     uses: ./.github/workflows/build.yml
+    secrets: inherit
 
   release:
     name: Release Package

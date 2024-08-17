@@ -20,7 +20,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-13
+# Date: 2024-08-17
 # ========================================================
 
 name: Project Building
@@ -39,6 +39,8 @@ jobs:
     env:
       GITHUB_REF_NAME: ${{ github.ref_name }}
       RUN_NUMBER: ${{ github.run_number }}
+      SONAR_GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
       - name: Checkout Code
@@ -65,8 +67,8 @@ jobs:
       - name: SonarCloud Analysis
         uses: ./.github/actions/sonarcloud-analysis
         with:
-          github-token: ${{ secrets.SONAR_GITHUB_TOKEN }}
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          github-token: ${{ env.SONAR_GITHUB_TOKEN }}
+          sonar-token: ${{ env.SONAR_TOKEN }}
 
       - name: Retrieve Tag
         id: retrieve_tag
