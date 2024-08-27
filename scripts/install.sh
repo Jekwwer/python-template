@@ -16,7 +16,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-10
+# Date: 2024-08-27
 # ========================================================
 
 # Source the configuration script
@@ -24,7 +24,9 @@ source "$(dirname "$0")/config.sh"
 
 # Create a virtual environment and activate it
 $PYTHON -m venv $VENV_DIR
-source $VENV_DIR/bin/activate
+
+# Check and activate the virtual environment
+check_and_activate_venv
 
 exit_code_sum=0
 

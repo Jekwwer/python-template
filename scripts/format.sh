@@ -15,14 +15,14 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-10
+# Date: 2024-08-27
 # ========================================================
 
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
-# Activate the virtual environment
-source $VENV_DIR/bin/activate
+# Check and activate the virtual environment
+check_and_activate_venv
 
 # Initialize the exit code sum variable
 exit_code_sum=0

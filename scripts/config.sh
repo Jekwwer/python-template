@@ -23,6 +23,7 @@
 # ========================================================
 RED='\033[0;31m'
 REVERSE_RED='\033[7;31m' # Red with reversed bg/fg colors
+YELLOW='\033[0;33m'
 GREEN='\033[0;32m'
 REVERSE_GREEN='\033[7;32m' # Green with reversed bg/fg colors
 NC='\033[0m'               # No Color
@@ -105,6 +106,10 @@ echo_reverse_red() {
     echo -e "${REVERSE_RED}$1${NC}"
 }
 
+echo_yellow() {
+    echo -e "${YELLOW}$1${NC}"
+}
+
 # Function to print messages in green
 echo_green() {
     echo -e "${GREEN}$1${NC}"
@@ -175,6 +180,24 @@ create_dir() {
     local dir="$1"
     if [ ! -d "$dir" ]; then
         mkdir -p "$dir"
+    fi
+}
+
+# Function to check if the virtual environment directory exists and activate it
+check_and_activate_venv() {
+    # Check if the virtual environment is already activated
+    if [ -z "${VIRTUAL_ENV:-}" ]; then
+        if [ ! -d "$VENV_DIR" ]; then
+            echo_red "ERROR: Virtual environment directory '$VENV_DIR' does not exist."
+            echo_red "ERROR: Ensure it is created correctly."
+            exit_check 1
+        fi
+
+        # Activate the virtual environment
+        source "$VENV_DIR/bin/activate"
+        echo_green "SUCCESS: Virtual environment '$VENV_DIR' activated."
+    else
+        echo_yellow "INFO: Virtual environment already activated: $VIRTUAL_ENV"
     fi
 }
 
