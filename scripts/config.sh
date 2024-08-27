@@ -31,23 +31,37 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-10
+# Date: 2024-08-27
 # ========================================================
 
 # Define shared variables
-PYTHON=python3
-VENV_DIR=venv
-SRC_DIR=src
-TEST_DIR=tests
-REPORTS_DIR=reports
-LOGS_DIR=logs
+PYTHON="python3"
+VENV_DIR="venv"
+SRC_DIR="src"
+TEST_DIR="tests"
+REPORTS_DIR="reports"
+LOGS_DIR="logs"
 
 # Get the script name
 SCRIPT_NAME=$(basename "$0")
 
-# Create logs and reports directories if it don't exist
-mkdir -p $REPORTS_DIR
-mkdir -p $LOGS_DIR
+# Ensure necessary commands exist
+command -v git >/dev/null 2>&1 || {
+    echo "git command not found, aborting."
+    exit 1
+}
+
+# Function to create directories if they don't exist
+create_dir() {
+    local dir="$1"
+    if [ ! -d "$dir" ]; then
+        mkdir -p "$dir"
+    fi
+}
+
+# Create logs and reports directories if they don't exist
+create_dir "$REPORTS_DIR"
+create_dir "$LOGS_DIR"
 
 # Get the last commit ID
 LAST_COMMIT_ID=$(git rev-parse --short HEAD)
@@ -59,10 +73,10 @@ export LOG_TAG_FILE="$LOGS_DIR/log-tag.txt"
 if [ ! -f "$LOG_TAG_FILE" ]; then
     # Generate a timestamp with the last commit ID
     LOG_TAG="$(date +"%Y%m%d_%H%M%S")_${LAST_COMMIT_ID}"
-    echo $LOG_TAG >$LOG_TAG_FILE
+    echo "$LOG_TAG" >"$LOG_TAG_FILE"
 else
     # Read the log tag from the file
-    LOG_TAG=$(cat $LOG_TAG_FILE)
+    LOG_TAG=$(cat "$LOG_TAG_FILE")
 fi
 
 # Define the report files' names with log tag
@@ -80,7 +94,7 @@ export ERROR_LOG="$LOGS_DIR/error_log_${LOG_TAG}.txt"
 
 # ANSI color code for formatting
 RED='\033[0;31m'
-REVERSE_RED='\033[7;31m' # Red with reversed bg/fg colorsr
+REVERSE_RED='\033[7;31m' # Red with reversed bg/fg colors
 GREEN='\033[0;32m'
 REVERSE_GREEN='\033[7;32m' # Green with reversed bg/fg colors
 NC='\033[0m'               # No Color
@@ -93,8 +107,8 @@ AUTHOR="Evgenii Shiliaev"
 ORGANIZATION="jekwwer"
 PROJECT_VERSION="0.3.0"
 PYTHON_VERSION="3.10"
-SOURCES=$SRC_DIR
-TESTS=$TEST_DIR
+SOURCES="$SRC_DIR"
+TESTS="$TEST_DIR"
 ENCODING="UTF-8"
 
 # Function to print messages in red
@@ -115,12 +129,6 @@ echo_green() {
 # Function to print messages in reverse green
 echo_reverse_green() {
     echo -e "${REVERSE_GREEN}$1${NC}"
-}
-
-# Function to log errors
-log_error() {
-    echo_red "$1" >>$ERROR_LOG
-    echo_red "$1"
 }
 
 # Function to execute a command silently and handle success/error reporting
@@ -164,7 +172,7 @@ exit_check() {
         echo "----------------------------------------"
         # Remove the error log if it is empty
         if [ -f "$ERROR_LOG" ] && [ ! -s "$ERROR_LOG" ]; then
-            rm -f $ERROR_LOG
+            rm -f "$ERROR_LOG"
         fi
         exit 0
     else
