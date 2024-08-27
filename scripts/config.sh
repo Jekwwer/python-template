@@ -98,26 +98,26 @@ export ERROR_LOG="$LOGS_DIR/error_log_${LOG_TAG}.txt"
 
 # Function to print messages in red
 echo_red() {
-    echo -e "${RED}$1${NC}"
+    echo -e "${RED}ERROR: $1${NC}"
 }
 
 # Function to print messages in reverse red
 echo_reverse_red() {
-    echo -e "${REVERSE_RED}$1${NC}"
+    echo -e "${REVERSE_RED}ERROR: $1${NC}"
 }
 
 echo_yellow() {
-    echo -e "${YELLOW}$1${NC}"
+    echo -e "${YELLOW}INFO: $1${NC}"
 }
 
 # Function to print messages in green
 echo_green() {
-    echo -e "${GREEN}$1${NC}"
+    echo -e "${GREEN}SUCCESS: $1${NC}"
 }
 
 # Function to print messages in reverse green
 echo_reverse_green() {
-    echo -e "${REVERSE_GREEN}$1${NC}"
+    echo -e "${REVERSE_GREEN}SUCCESS: $1${NC}"
 }
 
 # Function to execute a command silently and handle success/error reporting
@@ -137,7 +137,7 @@ execute_silently() {
 
     # Check the exit status of the command
     if [ $? -eq 0 ]; then
-        echo_green "SUCCESS: $operation"
+        echo_green "$operation"
         return 0
     else
         # Log the end of the operation
@@ -148,7 +148,7 @@ execute_silently() {
         } >>"$log"
         cat "$log" >>"$ERROR_LOG"
         rm -f "$log"
-        echo_red "ERROR: $operation"
+        echo_red "$operation"
         return 1
     fi
 }
@@ -159,7 +159,7 @@ exit_check() {
 
     # Check the exit status of the commands
     if [ $status -eq 0 ]; then
-        echo_reverse_green "SUCCESS: $SCRIPT_NAME"
+        echo_reverse_green "$SCRIPT_NAME"
         echo "----------------------------------------"
         # Remove the error log if it is empty
         if [ -f "$ERROR_LOG" ] && [ ! -s "$ERROR_LOG" ]; then
@@ -167,9 +167,9 @@ exit_check() {
         fi
         exit 0
     else
-        echo_reverse_red "ERROR: $SCRIPT_NAME"
+        echo_reverse_red "$SCRIPT_NAME"
         echo "----------------------------------------"
-        echo_red "Check $ERROR_LOG for details."
+        echo_yellow "Check $ERROR_LOG for details."
         echo "----------------------------------------"
         exit 1
     fi
@@ -188,16 +188,16 @@ check_and_activate_venv() {
     # Check if the virtual environment is already activated
     if [ -z "${VIRTUAL_ENV:-}" ]; then
         if [ ! -d "$VENV_DIR" ]; then
-            echo_red "ERROR: Virtual environment directory '$VENV_DIR' does not exist."
-            echo_red "ERROR: Ensure it is created correctly."
+            echo_red "Virtual environment directory '$VENV_DIR' does not exist."
+            echo_red "Ensure it is created correctly."
             exit_check 1
         fi
 
         # Activate the virtual environment
         source "$VENV_DIR/bin/activate"
-        echo_green "SUCCESS: Virtual environment '$VENV_DIR' activated."
+        echo_green "Virtual environment '$VENV_DIR' activated."
     else
-        echo_yellow "INFO: Virtual environment already activated: $VIRTUAL_ENV"
+        echo_yellow "Virtual environment already activated: $VIRTUAL_ENV"
     fi
 }
 
