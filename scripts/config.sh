@@ -183,6 +183,26 @@ create_dir() {
     fi
 }
 
+# Function to remove directories, files, or patterns safely
+remove_item() {
+    local item="$1"
+
+    # Check if item is a pattern (e.g., *.pyc or __pycache__)
+    if [[ "$item" == *"*"* ]]; then
+        find . -type f -name "$item" -delete 2>/dev/null || true
+        find . -type d -name "$item" -exec rm -rf {} + 2>/dev/null || true
+        echo_green "Removed all $item"
+    else
+        # Otherwise, treat as a regular directory or file
+        if [ -e "$item" ]; then
+            rm -rf "$item"
+            echo_green "Removed $item"
+        else
+            echo_yellow "$item does not exist, skipping."
+        fi
+    fi
+}
+
 # Function to check if the virtual environment directory exists and activate it
 check_and_activate_venv() {
     # Check if the virtual environment is already activated

@@ -15,33 +15,24 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-10
+# Date: 2024-08-27
 # ========================================================
 
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
-# Initialize the exit code sum variable
-exit_code_sum=0
+make clean
 
-# Clean everything using the clean script
-bash scripts/clean.sh
-exit_code_sum=$(($exit_code_sum + $?))
+# Remove logs, reports, and other build artifacts
+items_to_remove=("logs" "reports" ".benchmarks" ".coverage")
 
-# Remove logs and reports
-rm -rf logs
-exit_code_sum=$(($exit_code_sum + $?))
+for item in "${items_to_remove[@]}"; do
+    remove_item "$item"
+done
 
-rm -rf reports
-exit_code_sum=$(($exit_code_sum + $?))
+# Use exit_check to determine success or failure
+exit_check
 
-rm -rf .benchmarks
-exit_code_sum=$(($exit_code_sum + $?))
-
-rm -rf .coverage
-exit_code_sum=$(($exit_code_sum + $?))
-
-exit_check $exit_code_sum
 # ========================================================
 # End of scripts/clean_all.sh
 # ========================================================
