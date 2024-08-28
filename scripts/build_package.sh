@@ -33,7 +33,7 @@ fi
 
 # Create a source distribution and a wheel
 execute_silently "$PYTHON setup.py sdist bdist_wheel" "package project"
-exit_check # Check the exit status of the package creation process
+
 # ========================================================
 # End of scripts/build_package.sh
 # ========================================================

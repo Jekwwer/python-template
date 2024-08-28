@@ -15,7 +15,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-27
+# Date: 2024-08-28
 # ========================================================
 
 # Source the configuration script
@@ -28,7 +28,6 @@ check_and_activate_venv
 execute_silently "$VENV_DIR/bin/bandit -r $SRC_DIR/ $TEST_DIR/ -f json -o $BANDIT_REPORT;
                  if [ \$? -ne 0 ]; then echo 'Check $BANDIT_REPORT for details.' >&2; exit 1; fi" "bandit"
 
-exit_check $?
 # ========================================================
 # End of scripts/security_analysis.sh
 # ========================================================

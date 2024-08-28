@@ -15,7 +15,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-27
+# Date: 2024-08-28
 # ========================================================
 
 # ========================================================
@@ -120,39 +120,6 @@ echo_reverse_green() {
     echo -e "${REVERSE_GREEN}SUCCESS: $1${NC}"
 }
 
-# Function to execute a command silently and handle success/error reporting
-execute_silently() {
-    local command="$1"
-    local operation="$2"
-    local log="/tmp/${operation// /_}.log"
-
-    # Log the start of the operation
-    {
-        echo "Operation: $operation"
-        echo "Command: ${command%%;*}" # Display only the first command
-        echo "----------------------------------------"
-    } >>"$log"
-    # Execute the command and capture any error output
-    bash -c "$command" >/dev/null 2>>"$log"
-
-    # Check the exit status of the command
-    if [ $? -eq 0 ]; then
-        echo_green "$operation"
-        return 0
-    else
-        # Log the end of the operation
-        {
-            echo "----------------------------------------"
-            echo "End of operation: $operation"
-            echo ""
-        } >>"$log"
-        cat "$log" >>"$ERROR_LOG"
-        rm -f "$log"
-        echo_red "$operation"
-        return 1
-    fi
-}
-
 # Function to check the error log and report status
 exit_check() {
     local status=${1:-$?} # Use the first argument, or default to the last command's status
@@ -172,6 +139,40 @@ exit_check() {
         echo_yellow "Check $ERROR_LOG for details."
         echo "----------------------------------------"
         exit 1
+    fi
+}
+
+# Function to execute a command silently and handle success/error reporting
+execute_silently() {
+    local command="$1"
+    local operation="$2"
+    local log="/tmp/${operation// /_}.log"
+
+    # Log the start of the operation
+    {
+        echo "Operation: $operation"
+        echo "Command: ${command%%;*}" # Display only the first command
+        echo "----------------------------------------"
+    } >>"$log"
+
+    # Execute the command and capture any error output
+    bash -c "$command" >/dev/null 2>>"$log"
+    local status=$?
+
+    # Check the exit status of the command
+    if [ $status -eq 0 ]; then
+        echo_green "$operation"
+    else
+        # Log the end of the operation
+        {
+            echo "----------------------------------------"
+            echo "End of operation: $operation"
+            echo ""
+        } >>"$log"
+        cat "$log" >>"$ERROR_LOG"
+        rm -f "$log"
+        echo_red "$operation"
+        exit_check $status # Immediately call exit_check to exit the script
     fi
 }
 

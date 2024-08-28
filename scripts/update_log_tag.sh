@@ -6,8 +6,7 @@
 # Description: This script checks for the existence of the
 #              log-tag.txt file and deletes it if found.
 #
-# Usage: Typically used for cleaning up previous run information
-#        before starting new tasks or processes.
+# Usage: This script is intended to be run by the Makefile.
 #
 # Run the script using:
 # make update-log-tag
@@ -16,7 +15,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-28
 # ========================================================
 
 # Source the configuration script
@@ -30,7 +29,6 @@ fi
 # Check if the log tag file exists and delete it if found
 execute_silently "[ -f \"$LOG_TAG_FILE\" ] && rm -f \"$LOG_TAG_FILE\"" "check and delete log tag file"
 
-exit_check $?
 # ========================================================
 # End of scripts/update_log_tag.sh
 # ========================================================

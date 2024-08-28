@@ -8,9 +8,7 @@
 #              the properties file is correctly configured
 #              for SonarCloud to analyze the project's codebase.
 #
-# Usage: This script should be run from the root of the project
-#        directory or ensure that the config.sh script,
-#        which sets necessary environment variables, is correctly sourced.
+# Usage: This script is intended to be run by the Makefile.
 #
 # Run the script using:
 # make configure-sonar-analysis
@@ -19,7 +17,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-28
 # ========================================================
 
 # Source the configuration script
@@ -60,7 +58,6 @@ sonar.sourceEncoding=$ENCODING
 # ========================================================
 EOF" "generate sonar-project.properties"
 
-exit_check $?
 # ========================================================
 # End of scripts/configure_sonar_analysis.sh
 # ========================================================

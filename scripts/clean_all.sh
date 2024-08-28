@@ -30,9 +30,6 @@ for item in "${items_to_remove[@]}"; do
     remove_item "$item"
 done
 
-# Use exit_check to determine success or failure
-exit_check
-
 # ========================================================
 # End of scripts/clean_all.sh
 # ========================================================

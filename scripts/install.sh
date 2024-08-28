@@ -16,7 +16,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-27
+# Date: 2024-08-28
 # ========================================================
 
 # Source the configuration script
@@ -28,16 +28,10 @@ $PYTHON -m venv $VENV_DIR
 # Check and activate the virtual environment
 check_and_activate_venv
 
-exit_code_sum=0
-
 # Upgrade pip and install required packages
 execute_silently "pip install --upgrade pip" "pip upgrade"
-exit_code_sum=$(($exit_code_sum + $?))
-
 execute_silently "pip install -r requirements.txt" "pip install requirements"
-exit_code_sum=$(($exit_code_sum + $?))
 
-exit_check $exit_code_sum
 # ========================================================
 # End of scripts/install.sh
 # ========================================================
