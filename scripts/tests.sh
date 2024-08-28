@@ -20,6 +20,19 @@
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
+# Function to rename a report with a timestamp
+rename_report() {
+    local src_file="$1"
+    local dest_file="$2"
+
+    if [ -f "$src_file" ]; then
+        mv "$src_file" "$dest_file"
+        echo_green "Renamed $src_file to $dest_file"
+    else
+        echo_yellow "Source file $src_file not found. Skipping rename."
+    fi
+}
+
 # Install Tox because it needs to run in the same shell on the CI server
 execute_silently "pip install tox" "tox install"
 
@@ -27,14 +40,22 @@ execute_silently "pip install tox" "tox install"
 execute_silently "tox" "tox"
 
 # Rename the coverage report file to have a timestamp
-execute_silently "mv $REPORTS_DIR/coverage.xml $COVERAGE_REPORT" "rename coverage report"
+rename_report "$REPORTS_DIR/coverage.xml" "$COVERAGE_REPORT"
 
 # Rename the xunit result file to have a timestamp
-execute_silently "mv $REPORTS_DIR/xunit-result.xml $XUNIT_REPORT" "rename xunit report"
+rename_report "$REPORTS_DIR/xunit-result.xml" "$XUNIT_REPORT"
 
 # Find the latest benchmark report and rename it
-find_and_move_command="mv \"\$(find . -type f -name \"*benchmark*\" -print0 | xargs -0 stat --format '%W %n' | sort -n | tail -n 1 | cut -d' ' -f2-)\" \"$BENCHMARK_REPORT\""
-execute_silently "$find_and_move_command" "rename benchmark report"
+find_latest_benchmark() {
+    find . -type f -name "*benchmark*" -print0 | xargs -0 stat --format '%W %n' | sort -n | tail -n 1 | cut -d' ' -f2-
+}
+
+latest_benchmark=$(find_latest_benchmark)
+if [ -n "$latest_benchmark" ]; then
+    rename_report "$latest_benchmark" "$BENCHMARK_REPORT"
+else
+    echo_yellow "No benchmark report found."
+fi
 
 # ========================================================
 # End of scripts/tests.sh
