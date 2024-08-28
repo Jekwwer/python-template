@@ -204,6 +204,16 @@ remove_item() {
     fi
 }
 
+# Function to set up the virtual environment if it doesn't exist
+setup_virtualenv() {
+    if [ ! -d "$VENV_DIR" ]; then
+        echo_green "Creating a new virtual environment in $VENV_DIR"
+        $PYTHON -m venv "$VENV_DIR"
+    else
+        echo_yellow "Virtual environment already exists in $VENV_DIR"
+    fi
+}
+
 # Function to check if the virtual environment directory exists and activate it
 check_and_activate_venv() {
     # Check if the virtual environment is already activated

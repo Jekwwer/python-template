@@ -6,8 +6,7 @@
 #              installs the required packages listed in
 #              the dev-requirements.txt file, and sets up pre-commit hooks.
 #
-# Usage: This script is intended to be run by the Makefile and can also
-#        be run manually to set up the development environment.
+# Usage: This script is intended to be run by the Makefile.
 #
 # Run the script using:
 # make install-dev
@@ -22,10 +21,8 @@
 # Source the configuration script
 source "$(dirname "$0")/config.sh"
 
-# Create a virtual environment and activate it
-$PYTHON -m venv $VENV_DIR
-
-# Check and activate the virtual environment
+# Set up and activate the virtual environment
+setup_virtualenv
 check_and_activate_venv
 
 # Upgrade pip to the latest version
