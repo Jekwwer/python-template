@@ -29,6 +29,8 @@ fi
 # Check if the log tag file exists and delete it if found
 execute_silently "[ -f \"$LOG_TAG_FILE\" ] && rm -f \"$LOG_TAG_FILE\"" "check and delete log tag file"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/update_log_tag.sh
 # ========================================================

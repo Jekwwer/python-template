@@ -37,6 +37,8 @@ execute_silently "pip install -e ." "pip install package"
 # Install pre-commit hooks
 execute_silently "pre-commit install" "pre-commit install"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/install-dev.sh
 # ========================================================

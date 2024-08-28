@@ -29,6 +29,8 @@ check_and_activate_venv
 execute_silently "pip install --upgrade pip" "pip upgrade"
 execute_silently "pip install -r requirements.txt" "pip install requirements"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/install.sh
 # ========================================================

@@ -57,6 +57,8 @@ else
     echo_yellow "No benchmark report found."
 fi
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/tests.sh
 # ========================================================

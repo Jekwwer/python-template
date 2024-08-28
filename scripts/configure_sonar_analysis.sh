@@ -58,6 +58,8 @@ sonar.sourceEncoding=$ENCODING
 # ========================================================
 EOF" "generate sonar-project.properties"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/configure_sonar_analysis.sh
 # ========================================================

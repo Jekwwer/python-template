@@ -28,6 +28,8 @@ check_and_activate_venv
 execute_silently "$VENV_DIR/bin/bandit -r $SRC_DIR/ $TEST_DIR/ -f json -o $BANDIT_REPORT;
                  if [ \$? -ne 0 ]; then echo 'Check $BANDIT_REPORT for details.' >&2; exit 1; fi" "bandit"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/security_analysis.sh
 # ========================================================

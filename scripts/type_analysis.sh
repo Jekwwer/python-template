@@ -28,6 +28,8 @@ check_and_activate_venv
 execute_silently "$VENV_DIR/bin/mypy $SRC_DIR/ $TEST_DIR/ >$MYPY_REPORT;
                  if [ \$? -ne 0 ]; then echo 'Check $MYPY_REPORT for details.' >&2; exit 1; fi" "mypy"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/type_analysis.sh
 # ========================================================

@@ -15,7 +15,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-27
+# Date: 2024-08-28
 # ========================================================
 
 # Source the configuration script
@@ -40,6 +40,8 @@ for item in "${items_to_remove[@]}"; do
     remove_item "$item"
 done
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/clean.sh
 # ========================================================

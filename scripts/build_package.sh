@@ -8,13 +8,13 @@
 # Usage: This script is intended to be run by the Makefile.
 #
 # Run the script using:
-# make package
+# make build-package
 #
 # Repository: https://github.com/jekwwer/python-template
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-27
+# Date: 2024-08-28
 # ========================================================
 
 # Source the configuration script
@@ -34,6 +34,8 @@ fi
 # Create a source distribution and a wheel
 execute_silently "$PYTHON setup.py sdist bdist_wheel" "package project"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/build_package.sh
 # ========================================================

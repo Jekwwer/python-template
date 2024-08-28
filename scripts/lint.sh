@@ -32,6 +32,8 @@ execute_silently "$VENV_DIR/bin/flake8 $SRC_DIR/ $TEST_DIR/ --output-file=$FLAKE
 execute_silently "$VENV_DIR/bin/pylint $SRC_DIR/ $TEST_DIR/ >$PYLINT_REPORT;
                  if [ \$? -ne 0 ]; then echo 'Check $PYLINT_REPORT for details.' >&2; exit 1; fi" "pylint"
 
+# Exit the script successfully
+exit_check 0
 # ========================================================
 # End of scripts/lint.sh
 # ========================================================
