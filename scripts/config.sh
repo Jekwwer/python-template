@@ -15,7 +15,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-28
+# Date: 2024-08-29
 # ========================================================
 
 # ========================================================
@@ -35,6 +35,7 @@ PYTHON="python3"
 VENV_DIR="venv"
 SRC_DIR="src"
 TEST_DIR="tests"
+SCRIPTS_DIR="scripts"
 REPORTS_DIR="reports"
 LOGS_DIR="logs"
 
@@ -44,7 +45,7 @@ PROJECT_NAME="Python Template Repository"
 REPOSITORY_URL="https://github.com/jekwwer/python-template"
 AUTHOR="Evgenii Shiliaev"
 ORGANIZATION="jekwwer"
-PROJECT_VERSION="0.3.0"
+PROJECT_VERSION="__VERSION__"
 PYTHON_VERSION="3.10"
 SOURCES="$SRC_DIR"
 TESTS="$TEST_DIR"

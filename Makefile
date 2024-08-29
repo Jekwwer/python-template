@@ -22,14 +22,14 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-12
+# Date: 2024-08-29
 # ========================================================
 
 # Disable echoing of commands
 MAKEFLAGS += -s
 
 # Phony targets are targets that are not files
-.PHONY: all install install-dev format tests lint type-analysis security-analysis build-package configure-sonar-analysis update-log-tag clean clean-all
+.PHONY: all install install-dev format tests lint type-analysis security-analysis build-package configure-sonar-analysis update-version update-log-tag clean clean-all
 
 # Default target
 all: update-log-tag install-dev format tests lint type-analysis security-analysis configure-sonar-analysis
@@ -66,12 +66,16 @@ security-analysis: update-log-tag install-dev
 	bash scripts/security_analysis.sh
 
 # Create a package
-build-package: clean install-dev tests
+build-package: update-version clean install-dev tests
 	bash scripts/build_package.sh
 
 # Generate the sonar-project.properties file
-configure-sonar-analysis:
+configure-sonar-analysis: update-version
 	bash scripts/configure_sonar_analysis.sh
+
+# Update the version of the project
+update-version:
+	bash scripts/update_version.sh
 
 # Update the log tag for adding the current date and time to logs
 update-log-tag:

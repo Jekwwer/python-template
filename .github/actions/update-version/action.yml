@@ -1,0 +1,31 @@
+# ========================================================
+# .github/actions/update-version/action.yml
+# ========================================================
+# Project Name: Python Template Repository
+# Description: This action update the project version.
+#
+# Usage: Include this action in workflows to perform
+#        version update:
+#        - name: Update Version
+#          uses: ./.github/actions/update-version
+#
+# Repository: https://github.com/jekwwer/python-template
+# Author: Evgenii Shiliaev
+# Author's GitHub Username: @Jekwwer
+#
+# Date: 2024-08-29
+# ========================================================
+
+name: "Version Update"
+description: "Run version update using last pushed tag."
+author: "Evgennii Shiliaev (@Jekwwer)"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run Version Update using Makefile
+      run: make update-version
+      shell: bash
+# ========================================================
+# End of .github/actions/update-version/action.yml
+# ========================================================

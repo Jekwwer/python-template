@@ -20,7 +20,7 @@
 # Author: Evgenii Shiliaev
 # Author's GitHub Username: @Jekwwer
 #
-# Date: 2024-08-17
+# Date: 2024-08-29
 # ========================================================
 
 name: Project Building
@@ -64,15 +64,18 @@ jobs:
       - name: Tests
         uses: ./.github/actions/tests
 
+      - name: Retrieve Tag
+        id: retrieve_tag
+        uses: ./.github/actions/retrieve-tag
+
+      - name: Update Version in Code
+        uses: ./.github/actions/update-version
+
       - name: SonarCloud Analysis
         uses: ./.github/actions/sonarcloud-analysis
         with:
           github-token: ${{ env.SONAR_GITHUB_TOKEN }}
           sonar-token: ${{ env.SONAR_TOKEN }}
-
-      - name: Retrieve Tag
-        id: retrieve_tag
-        uses: ./.github/actions/retrieve-tag
 
       - name: Build Package
         env:

@@ -32,7 +32,7 @@ execute_silently "pip install --upgrade pip" "pip upgrade"
 execute_silently "pip install -r dev-requirements.txt" "pip install dev-requirements"
 
 # Install the package itself in editable mode
-execute_silently "pip install -e ." "pip install package"
+# execute_silently "pip install -e ." "pip install package"
 
 # Install pre-commit hooks
 execute_silently "pre-commit install" "pre-commit install"
