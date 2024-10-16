@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PROJECT_NAME"
+version = "0.1.0"
+description = "PROJECT_DESCRIPTION"
+authors = [
+    { name = "AUTHOR_NAME", email = "AUTHOR@example.com" }]
+license = {text = "GNU General Public License v3.0"}
+requires-python = ">=3.12"
+readme = "README.md"
+keywords = ["python", "template"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "build==1.2.0",
+    "pre-commit==4.0.1",
+    "tox==4.23.0",
+    "tox-gh-actions==3.2.0"]
+test = [
+    "pytest==8.3.3",
+    "pytest-cov==5.0.0",
+    "pytest-xdist==3.6.1"]
+lint = [
+    "flake8==7.1.0",
+    "flake8-annotations==3.1.1",
+    "flake8-bugbear==24.8.19",
+    "flake8-comprehensions==3.15.0",
+    "flake8-docstrings==1.7.0",
+    "flake8-import-order==0.18.2",
+    "flake8-pyproject==1.2.3",
+    "pydocstyle==6.3.0",
+    "pylint==3.3.1"]
+format = [
+    "autopep8==2.3.1",
+    "isort==5.13.2"]
+mypy = [
+    "mypy==1.12.0"]
+bandit = [
+    "bandit==1.7.10"]
+
+[project.urls]
+"Homepage" = "https://github.com/GITHUB_USERNAME/REPOSITORY_NAME"
+"Bug Reports" = "https://github.com/GITHUB_USERNAME/REPOSITORY_NAME/issues"
+"Source" = "https://github.com/GITHUB_USERNAME/REPOSITORY_NAME"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.autopep8]
+max_line_length = 88
+recursive = true
+aggressive = 3
+
+[tool.bandit]
+exclude_dirs = ["tests", "migrations", "env"]
+severity = ["HIGH", "MEDIUM", "LOW"]
+confidence = ["HIGH", "MEDIUM", "LOW"]
+
+[tool.flake8]
+max_line_length = 88
+docstring_convention = "google"
+ignore = ["I201"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "env",
+    "venv",
+    "migrations"
+]
+
+[tool.isort]
+profile = "black"
+known_third_party = ""
+known_first_party = "PROJECT_NAME,utils,tests"
+skip = "migrations,env,venv"
+sections = "FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.12"
+platform = "linux"
+strict = true
+warn_unused_ignores = true
+disallow_untyped_defs = true

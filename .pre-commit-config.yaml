@@ -1,0 +1,66 @@
+# .pre-commit-config.yaml: Sets up pre-commit hooks to automate code quality checks.
+
+repos:
+  # Pre-defined hooks from pre-commit-hooks repository
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-ast                  # Verifies that the code can be parsed into an abstract syntax tree
+      - id: debug-statements           # Ensures no debug statements (like print or pdb) are left in the code
+      - id: end-of-file-fixer          # Ensures files end with a newline
+      - id: trailing-whitespace        # Removes any trailing whitespace
+      - id: mixed-line-ending          # Fixes mixed line endings (uses LF by default)
+        args: [--fix=lf]
+      - id: detect-private-key         # Detects accidentally committed private keys
+      - id: check-docstring-first      # Checks that docstrings come first in modules and functions
+      - id: check-yaml                 # Validates the syntax of YAML files
+      - id: check-json                 # Validates the syntax of JSON files
+      - id: double-quote-string-fixer  # Replaces single quotes with double quotes in strings
+      - id: pretty-format-json         # Formats JSON files in a standardized way
+        args: ["--autofix"]
+      - id: check-merge-conflict       # Ensures there are no unresolved merge conflicts in the code
+      - id: check-case-conflict        # Detects files that would conflict in case-insensitive filesystems
+      - id: check-shebang-scripts-are-executable  # Checks that files with a shebang (`#!`) are executable
+
+  # Local custom hooks using tox environments
+  - repo: local
+    hooks:
+      - id: tests
+        name: testing
+        language: system
+        entry: tox
+        pass_filenames: true
+        files: \.py$                  # Only trigger for Python files
+        args: ["--", "{filenames}"]
+
+      - id: lint
+        name: linting
+        entry: tox -e lint
+        language: system
+        pass_filenames: true
+        files: \.py$                  # Only trigger for Python files
+        args: ["--", "{filenames}"]
+
+      - id: format
+        name: formatting
+        entry: tox -e format
+        language: system
+        pass_filenames: true
+        files: \.py$                  # Only trigger for Python files
+        args: ["--", "{filenames}"]
+
+      - id: bandit
+        name: security checks
+        language: system
+        entry: tox -e bandit
+        pass_filenames: true
+        files: \.py$                  # Only trigger for Python files
+        args: ["--", "{filenames}"]
+
+      - id: mypy
+        name: type checks
+        language: system
+        entry: tox -e mypy
+        pass_filenames: true
+        files: \.py$                  # Only trigger for Python files
+        args: ["--", "{filenames}"]

@@ -1,0 +1,46 @@
+# .editorconfig: Enforces consistent coding styles across the project.
+
+# Top-most EditorConfig file
+root = true
+
+# Global settings: Unix-style newlines and UTF-8 encoding
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+trim_trailing_whitespace = true
+
+# Python-specific settings
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+trim_trailing_whitespace = true
+
+# Markdown-specific settings
+[*.md]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+
+# Configuration file settings
+[*.{editorconfig,ini,toml}]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Gitignore settings
+[.gitignore]
+indent_style = space
+indent_size = 2
+
+# YAML-specific settings
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# General settings for text-based files (e.g., JSON, XML)
+[*.{txt,json,xml}]
+indent_style = space
+indent_size = 2
