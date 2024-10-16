@@ -1,0 +1,66 @@
+# ========================================================
+# .pre-commit-config.yaml
+# ========================================================
+# Project Name: PROJECT_NAME
+# Description: This configuration file sets up pre-commit hooks
+#              for automatically checking and formatting code
+#              before commits.
+#
+# Repository: https://github.com/GITHUB_USERNAME/REPOSITORY_NAME
+#
+# Author: AUTHOR_NAME
+#
+# Date: CURRENT_DATE
+# ========================================================
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-ast
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: detect-private-key
+      - id: check-docstring-first
+      - id: check-yaml
+      - id: check-json
+      - id: double-quote-string-fixer
+      - id: pretty-format-json
+        args: ["--autofix"]
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-shebang-scripts-are-executable
+
+  - repo: local
+    hooks:
+      - id: tests
+        name: testing
+        language: system
+        entry: tox
+        pass_filenames: false
+      - id: lint
+        name: linting
+        entry: tox -e lint
+        language: system
+        pass_filenames: false
+      - id: format
+        name: formatting
+        entry: tox -e format
+        language: system
+        pass_filenames: false
+      - id: bandit
+        name: security checks
+        language: system
+        entry: tox -e bandit
+        pass_filenames: false
+      - id: mypy
+        name: type checks
+        language: system
+        entry: tox -e mypy
+        pass_filenames: false
+
+# ========================================================
+# End of .pre-commit-config.yaml
+# ========================================================
