@@ -1,0 +1,78 @@
+{
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "catppuccin.catppuccin-vsc",
+        "catppuccin.catppuccin-vsc-icons",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "github.copilot",
+        "github.copilot-chat",
+        "github.vscode-github-actions",
+        "ms-python.autopep8",
+        "ms-python.debugpy",
+        "ms-python.flake8",
+        "ms-python.mypy",
+        "ms-python.pylint",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-vscode-remote.remote-containers",
+        "redhat.vscode-yaml",
+        "shd101wyy.markdown-preview-enhanced",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[python]": {
+          "defaultInterpreterPath": "/usr/local/bin/python",
+          "editor.defaultFormatter": "ms-python.autopep8"
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "cSpell.words": [
+          "autofix",
+          "autopep8",
+          "autouse",
+          "Catppuccin",
+          "checkstyle",
+          "davidanson",
+          "debugpy",
+          "devcontainers",
+          "endcode",
+          "Evgenii",
+          "esbenp",
+          "Macchiato",
+          "maxfail",
+          "mypy",
+          "pylance",
+          "pylint",
+          "Shiliaev",
+          "venv"
+        ],
+        "editor.bracketPairColorization.enabled": true,
+        "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+        "editor.fontSize": 14,
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay",
+        "files.autoSaveWhenNoErrors": true,
+        "markdown-preview-enhanced.previewTheme": "github-dark.css",
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "workbench.activityBar.location": "top",
+        "workbench.colorTheme": "Catppuccin Macchiato",
+        "workbench.iconTheme": "catppuccin-macchiato",
+        "yaml.format.enable": true
+      }
+    }
+  },
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "name": "PROJECT_NAME",
+  "postCreateCommand": "pip install --upgrade pip && pip install .[dev,test,lint,format,mypy,bandit] && pre-commit install",
+  "remoteUser": "vscode"
+}
