@@ -23,7 +23,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = [
-    "build==1.2.0",
+    "build==1.2.2.post1",
     "pre-commit==4.0.1",
     "tox==4.23.0",
     "tox-gh-actions==3.2.0"]
