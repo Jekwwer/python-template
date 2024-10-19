@@ -1,0 +1,36 @@
+# ========================================================
+# .github/dependabot.yml
+# ========================================================
+# Project Name: PROJECT_NAME
+# Description: This Dependabot configuration:
+#                 - automates dependency updates for pip,
+#                 - triggers updates weekly,
+#                 - assigns reviewers and assignees,
+#                 - limits open pull requests to 5 per update,
+#                 - applies a commit prefix for each update.
+#
+# Usage: Dependabot will automatically open pull requests for package updates.
+#
+# Repository: https://github.com/GITHUB_USERNAME/REPOSITORY_NAME
+# Author: AUTHOR_NAME
+#
+# Date: CREATED_DATE
+# ========================================================
+
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "GITHUB_USERNAME"
+    assignees:
+      - "GITHUB_USERNAME"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+
+# ========================================================
+# End of .github/dependabot.yml
+# ========================================================
