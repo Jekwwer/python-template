@@ -1,0 +1,32 @@
+# .github/workflows/coverage.yml: Tests the project and uploads reports to Codecov.
+
+name: Upload coverage
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  coverage:
+    name: Run tests and upload coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests (calling test workflow)
+        uses: ./.github/workflows/test.yml
+        with:
+          python-version: 3.12
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage results to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
