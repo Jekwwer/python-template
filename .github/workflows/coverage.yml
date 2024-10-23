@@ -15,6 +15,11 @@ jobs:
     name: Run tests and upload coverage
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Run tests (calling test workflow)
         uses: ./.github/workflows/test.yml
         with:
