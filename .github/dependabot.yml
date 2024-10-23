@@ -1,4 +1,4 @@
-# .github/dependabot.yml: Automates pip dependency updates on a weekly basis.
+# .github/dependabot.yml: Automates dependency updates.
 
 # Assigns reviewers and assignees, limits open pull requests,
 # and prefixes commits for better traceability.
@@ -7,6 +7,18 @@ version: 2
 updates:
   - package-ecosystem: "pip"
     directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "GITHUB_USERNAME"
+    assignees:
+      - "GITHUB_USERNAME"
+    commit-message:
+      prefix: "deps"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "github-actions"
+    directory: ".github"
     schedule:
       interval: "weekly"
     reviewers:
