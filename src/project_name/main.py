@@ -12,7 +12,7 @@ Example:
 """
 
 from project_name.greet import greet
-from utils.helpers import helper_function
+from project_name.utils.helpers import helper_function
 
 
 def main() -> None:
